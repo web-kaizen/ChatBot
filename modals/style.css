@@ -1,0 +1,38 @@
+/*__________Modal window "limit massege"__________*/
+
+.type3 {
+    /*auxiliary parameter for separation!*/
+    margin: 30px;
+}
+
+.modalWindowLimitMassege {
+    width: 365px;
+    height: 139px;
+    padding: 20px 40px 41px 40px;
+    border-radius: 20px;
+    background-color: #161616;
+}
+
+.modalWindowRegistration__nameCompany {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 64px;
+    font-weight: 700;
+    background-color: #161616;
+}
+
+.warningMassage {
+    color: #FFF;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.modalLink_none {
+    text-decoration: none;
+    color: #FFF;
+}

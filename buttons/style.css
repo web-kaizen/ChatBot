@@ -1,0 +1,201 @@
+/*__________Button registration and authorization__________*/
+
+.technicalBlock {
+    /*auxiliary parameter for alignment!*/
+    margin: 30px;
+}
+
+.inputButton {
+    /*!before inserting, uncomment the line!*/
+    /*display: flex;*/
+    justify-content: center;
+    margin: 0 0 30px;
+}
+
+.button__action {
+    display: flex;
+    justify-content: center;
+    width: 420px;
+    height: 55px;
+    background-color: #1C40FF;
+    border-radius: 10px;
+    border-color: #1C40FF;
+    cursor: pointer;
+    align-items: center;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.button__action:hover {
+    background-color: #1633cc;
+    border-color: #1633cc;
+}
+
+
+/*__________Add new chat bottom__________*/
+
+.buttonAddChat {
+    display: flex;
+    vertical-align: baseline;
+    all: unset;
+    cursor: pointer;
+    width: 312px;
+    height: 30px;
+    padding: 10px 0px 10px 10px;
+    background-color: #282828;
+    border: 1px solid #5F5F5F;
+    border-radius: 10px;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.iconAddChat {
+    vertical-align: bottom;
+}
+
+.iconAddChat {
+    margin: 0 10px -2px 0;
+}
+
+
+/*.buttonAddChat:active {
+    transform: scale(1);
+    box-shadow: 3px 2px 22px 1px #5F5F5F;
+}*/
+
+
+/*__________Slide left side__________*/
+
+.slideLeftSideButton {
+    display: flex;
+    width: 38px;
+    height: 28px;
+    padding: 14px 0px 10px 10px;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    align-items: center;
+}
+
+.buttonleftSlide {
+    all: unset;
+    cursor: pointer;
+}
+
+
+/*.slideLeftSideButton:active {
+    transform: scale(1);
+    box-shadow: 3px 2px 15px 1px #5F5F5F;
+}*/
+
+
+/*__________Input account__________*/
+
+.inputAccount {
+    display: flex;
+    justify-content: baseline;
+    width: 340px;
+    height: 23px;
+}
+
+.inputAccountButton {
+    all: unset;
+    cursor: pointer;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.iconInputAccount {
+    margin: 0 10px -4px 0;
+}
+
+
+/*__________Select bot var 1__________*/
+
+.selectBot {
+    display: flex;
+    justify-content: space-between;
+    width: 373px;
+    height: 38px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #161616;
+    cursor: pointer;
+}
+
+.buttonSelectBot {
+    all: unset;
+    cursor: pointer;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.iconSelectBot {
+    margin: 14px 0 0 0;
+}
+
+
+/*.selectBot:active {
+    transform: scale(1);
+    box-shadow: 3px 2px 22px 1px #5F5F5F;
+}*/
+
+
+/*__________Select bot var 1__________*/
+
+
+/*.selectBotButton {
+    display: flex;
+    justify-content: center;
+}*/
+
+select {
+    margin: 0 0 20px 0;
+    width: 300px;
+    padding: 15px;
+    background-color: #161616;
+    color: #FFF;
+    display: block;
+    left: 0;
+    border-radius: 10px;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+select:hover {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    cursor: pointer;
+}
+
+
+/*__________Option__________*/
+
+.dubleButton {
+    display: flex;
+    justify-content: space-between;
+    width: 340px;
+    height: 28px;
+}
+
+.firstButton1,
+.secondButton2 {
+    all: unset;
+    cursor: pointer;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.iconfirstButton1 {
+    margin: 0px 10px -8px 0;
+}
