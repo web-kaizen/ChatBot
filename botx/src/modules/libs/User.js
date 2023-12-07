@@ -1,21 +1,17 @@
 import ApiError from './ApiError.js';
 
 export default class User {
-    constructor() {
-        this.apiError = new ApiError();
-    }
-
     makeReg(deviceId, email = undefined, password = undefined, confirmPassword = undefined, callback = undefined) {
-        if (typeof deviceId !== 'string') this.apiError._returnError('invalid_device_id');
-        if (callback && typeof callback !== 'function') this.apiError._returnError('invalid_callback');
+        if (typeof deviceId !== 'string') ApiError.return('invalid_device_id');
+        if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let user = JSON.parse(localStorage.getItem('user')) || {};
 
         if (email && password && confirmPassword) {
-            if (typeof email !== 'string') this.apiError._returnError('invalid_email');
-            if (typeof password !== 'string') this.apiError._returnError('invalid_password');
-            if (typeof confirmPassword !== 'string') this.apiError._returnError('invalid_confirm_password');
-            if (password !== confirmPassword) this.apiError._returnError('invalid_passwords');
+            if (typeof email !== 'string') ApiError.return('invalid_email');
+            if (typeof password !== 'string') ApiError.return('invalid_password');
+            if (typeof confirmPassword !== 'string') ApiError.return('invalid_confirm_password');
+            if (password !== confirmPassword) ApiError.return('invalid_passwords');
 
             user = { email: email, password: password };
         }
@@ -28,16 +24,16 @@ export default class User {
     }
 
     makeAuth(deviceId, email = undefined, password = undefined, callback = undefined) {
-        if (typeof deviceId !== 'string') this.apiError._returnError('invalid_device_id');
-        if (callback && typeof callback !== 'function') this.apiError._returnError('invalid_callback');
+        if (typeof deviceId !== 'string') ApiError.return('invalid_device_id');
+        if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let user = JSON.parse(localStorage.getItem('user')) || {};
-        if (Object.keys(user).length === 0) this.apiError._returnError('user_not_found');
+        if (Object.keys(user).length === 0) ApiError.return('user_not_found');
 
         if (email && password) {
-            if (typeof email !== 'string') this.apiError._returnError('invalid_email');
-            if (typeof password !== 'string') this.apiError._returnError('invalid_password');
-            if (user.email !== email || user.password !== password) this.apiError._returnError('invalid_email_or_password');
+            if (typeof email !== 'string') ApiError.return('invalid_email');
+            if (typeof password !== 'string') ApiError.return('invalid_password');
+            if (user.email !== email || user.password !== password) ApiError.return('invalid_email_or_password');
 
             let alphabet = 'qwertyuiopasdfghjklzxcvbnm';
             let token = '';
@@ -55,7 +51,7 @@ export default class User {
     }
 
     logout(callback = undefined) {
-        if (callback && typeof callback !== 'function') this.apiError._returnError('invalid_callback');
+        if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let user = JSON.parse(localStorage.getItem('user')) || {};
         let status = false;

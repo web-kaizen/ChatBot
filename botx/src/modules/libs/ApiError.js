@@ -1,6 +1,5 @@
 export default class ApiError {
-    constructor() {
-        this._errorList = {
+    static errorList = {
             'invalid_device_id': 'Невалидный deviceId',
             'invalid_callback': 'Невалидный callback',
             'invalid_email': 'Неверный электронный адрес',
@@ -9,11 +8,10 @@ export default class ApiError {
             'invalid_confirm_password': 'Неверный пароль подтверждения',
             'invalid_passwords': 'Пароли не совпадают',
             'user_not_found': 'Пользователь не найден',
-        };
-    }
+    };
 
-    _returnError(code) {
-        let message = this._errorList[code] || null;
+    static return(code) {
+        let message = this.errorList[code] || null;
 
         if (message === null) {
             code = 'unknown_error';
