@@ -2,6 +2,7 @@ const main = () => {
     const sidebar = document.querySelector('.sidebar');
     const viewSidebarBtn = sidebar.querySelector('.view-sidebar-btn');
     const viewSidebarList = sidebar.querySelector('.view-sidebar-list');
+    const viewSidebarItems = sidebar.querySelectorAll('.view-sidebar-item');
     const popupLogin = document.getElementById('popup-login');
     const loginAlertMsg = popupLogin.querySelector('.login-alert-msg')
     const formLogin = popupLogin.querySelector('.form-login');
@@ -95,12 +96,18 @@ const main = () => {
 
         inptsForm.forEach(input => {
             if (!input.value.trim()) {
-                switch (input.type) {
+                switch (input.dataset.inputName) {
                     case 'email':
                         input.nextElementSibling.textContent = 'Заполните поле Email'
                         break;
                     case 'password':
                         input.nextElementSibling.textContent = 'Заполните поле Пароль'
+                        break;
+                    case 'repeatPassword':
+                        input.nextElementSibling.textContent = 'Заполните поле Повторите пароль'
+                        break;
+                    default:
+                        input.nextElementSibling.textContent = 'Заполните поле'
                         break;
                 };
                 input.nextElementSibling.classList.add('open');
@@ -159,6 +166,9 @@ const main = () => {
                     if (input.type === 'email') {
                         input.nextElementSibling.textContent = 'Указанный пользователь уже зарегистрирован'
                         input.nextElementSibling.classList.add('open');
+                    };
+                    if (input.type === 'password') {
+                        input.value = '';
                     };
                 });
             } else if (password !== repeatPassword) {
@@ -235,11 +245,13 @@ const main = () => {
             sidebar.style.order = '';
             viewSidebarBtn.classList.remove('right');
             viewSidebarList.classList.remove('show');
+            viewSidebarItems.forEach(item => item.classList.toggle('active'))
         };
         if (e.target.closest('.view-sidebar-right')) {
             sidebar.style.order = '1';
             viewSidebarBtn.classList.add('right');
             viewSidebarList.classList.remove('show');
+            viewSidebarItems.forEach(item => item.classList.toggle('active'))
         };
         if (e.target.closest('.user-balance-update')) {
             /* Кнопка "Обновить" баланс */
