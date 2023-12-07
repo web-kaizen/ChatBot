@@ -101,8 +101,7 @@ ul {
     display: flex;
 }
 
-.view-sidebar-left,
-.view-sidebar-right {
+.view-sidebar-item {
     border-radius: 10px;
     background: transparent;
     padding: 8px;
@@ -115,9 +114,12 @@ ul {
     transform: rotate(180deg);
 }
 
+.view-sidebar-item.active {
+    display: none;
+}
+
 .view-sidebar-btn:hover,
-.view-sidebar-left:hover,
-.view-sidebar-right:hover {
+.view-sidebar-item:hover {
     background: #676767;
     cursor: pointer;
 }
@@ -343,6 +345,14 @@ ul {
     font-weight: 400;
 }
 
+.chat-form__input:-webkit-autofill,
+.chat-form__input:-webkit-autofill:hover,
+.chat-form__input:-webkit-autofill:focus,
+.chat-form__input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+    -webkit-text-fill-color: #161616 !important;
+}
+
 .chat-form button {
     cursor: pointer;
     border: none;
@@ -468,6 +478,14 @@ ul {
 
 .form-input input::placeholder {
     color: #8C8C8C;
+}
+
+.form-input input:-webkit-autofill,
+.form-input input:-webkit-autofill:hover,
+.form-input input:-webkit-autofill:focus,
+.form-input input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #282828 inset !important;
+    -webkit-text-fill-color: #FFF !important;
 }
 
 .alertError {
