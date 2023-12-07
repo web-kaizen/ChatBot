@@ -1,9 +1,9 @@
 import ApiError from './ApiError.js';
 
 export default class User {
-    makeReg(deviceId, email = undefined, password = undefined, confirmPassword = undefined, callback = undefined) {
+    makeReg(deviceId, callback, email = undefined, password = undefined, confirmPassword = undefined) {
         if (typeof deviceId !== 'string') ApiError.return('invalid_device_id');
-        if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
+        if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let user = JSON.parse(localStorage.getItem('user')) || {};
 
@@ -20,12 +20,12 @@ export default class User {
 
         localStorage.setItem('user', JSON.stringify(user));
 
-        if (callback) callback(user);
+        callback(user);
     }
 
-    makeAuth(deviceId, email = undefined, password = undefined, callback = undefined) {
+    makeAuth(deviceId, callback, email = undefined, password = undefined) {
         if (typeof deviceId !== 'string') ApiError.return('invalid_device_id');
-        if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
+        if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let user = JSON.parse(localStorage.getItem('user')) || {};
         if (Object.keys(user).length === 0) ApiError.return('user_not_found');
@@ -47,11 +47,11 @@ export default class User {
 
         localStorage.setItem('user', JSON.stringify(user));
 
-        if (callback) callback(user);
+        callback(user);
     }
 
-    logout(callback = undefined) {
-        if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
+    logout(callback) {
+        if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let user = JSON.parse(localStorage.getItem('user')) || {};
         let status = false;
@@ -63,6 +63,6 @@ export default class User {
 
         localStorage.setItem('user', JSON.stringify(user));
 
-        if (callback) callback(status);
+        callback(status);
     }
 }
