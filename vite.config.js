@@ -1,16 +1,20 @@
-import { resolve } from 'path'
+import { resolve } from 'path';
+import watchAndRun from 'vite-plugin-watch-and-run'
 
 export default {
+    root: resolve(__dirname, 'src'),
     build: {
-        rollupOptions: {
-            input: {
-                main: resolve(__dirname, 'index.html'),
-                botx: resolve(__dirname, 'botx/index.html'),
-                buttons: resolve(__dirname, 'buttons/index.html'),
-                fullcomp: resolve(__dirname, 'fullcomp/index.html'),
-                inputs: resolve(__dirname, 'inputs/index.html'),
-                modals: resolve(__dirname, 'modals/index.html'),
+        outDir: '../dist'
+    },
+    plugins: [
+        watchAndRun([
+            {
+                name: 'build',
+                watchKind: ['add', 'change', 'unlink'],
+                watch: resolve('src/**/*'),
+                run: 'npm run build',
+                delay: 300
             }
-        }
-    }
+        ]),
+    ]
 }

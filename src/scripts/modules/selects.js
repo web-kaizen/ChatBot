@@ -1,9 +1,7 @@
-const selects = () => {
+const selects = (url) => {
     const selectTypeBot = document.getElementById('type-bot');
     const selectModelBot = document.getElementById('bot-model');
     const selectModeBot = document.getElementById('bot-mode');
-
-    const url = '../db/bots.json';
 
     let listBots
     let sectorObj
