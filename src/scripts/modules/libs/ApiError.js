@@ -8,6 +8,7 @@ export default class ApiError {
             'invalid_confirm_password': 'Неверный пароль подтверждения',
             'invalid_passwords': 'Пароли не совпадают',
             'user_not_found': 'Пользователь не найден',
+            'server_error': 'Internal server error'
     };
 
     static return(code) {
