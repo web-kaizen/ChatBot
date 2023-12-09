@@ -1,12 +1,12 @@
-
+import ApiError from './ApiError.js';
 
 export default class Bot {
     getList(callback = undefined) {
-        if (callback && typeof callback !== 'function') this._returnError('invalid_callback');
+        if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
 
         fetch('http://85.215.65.210/api/v0/bots')
             .then(response => {
-                if (!response.ok) this._returnError('server_error');
+                if (!response.ok) ApiError.return('server_error');
                 return response.json();
             })
             .then(data => {
