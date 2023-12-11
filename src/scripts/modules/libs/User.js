@@ -9,6 +9,7 @@ export default class User {
 
         if (email && password && confirmPassword) {
             if (typeof email !== 'string') ApiError.return('invalid_email');
+            if (email === user.email) ApiError.return('email_busy');
             if (typeof password !== 'string') ApiError.return('invalid_password');
             if (typeof confirmPassword !== 'string') ApiError.return('invalid_confirm_password');
             if (password !== confirmPassword) ApiError.return('invalid_passwords');
