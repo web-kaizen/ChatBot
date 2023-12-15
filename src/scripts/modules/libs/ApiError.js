@@ -9,6 +9,7 @@ export default class ApiError {
         'invalid_passwords': 'Пароли не совпадают',
         'user_not_found': 'Пользователь не найден',
         'email_busy': 'Электронный адрес занят',
+        'server_error': 'Internal server error',
     };
 
     static return(code) {
