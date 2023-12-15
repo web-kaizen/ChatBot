@@ -74,6 +74,7 @@ const validateForm = (mode) => {
             if (json.code === 'invalid_email_or_password') {
                 inputShowError(inputEmail, '');
                 inputShowError(inputPassword, '');
+                loginAlertMsg.textContent = json.text
                 loginAlertMsg.classList.add('show');
             };
 

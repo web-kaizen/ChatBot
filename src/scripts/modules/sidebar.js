@@ -30,7 +30,15 @@ const sidebar = () => {
         if (e.target.closest('.topup-balance')) {
             /* Кнопка "Пополнить" баланс */
         };
-        if (e.target.closest('.user-logout')) logOut();
+        if (e.target.closest('.user-logout')) {
+            try {
+                user.logout(logOut);
+            } catch (error) {
+                let json = JSON.parse(error.message);
+
+                console.error(json.text);
+            }
+        };
     })
 };
 
