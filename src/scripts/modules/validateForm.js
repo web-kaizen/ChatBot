@@ -45,9 +45,7 @@ const validateForm = (mode) => {
         } else {
             if (input.dataset.inputName === 'email') {
                 if (!validateEmail(input.value)) {
-                    input.nextElementSibling.textContent = 'Электронная почта указана некорректно'
-                    input.nextElementSibling.classList.add('open');
-                    input.parentElement.classList.add('invalid');
+                    inputShowError(input, 'Электронная почта указана некорректно');
                     status = false;
                 } else {
                     email = input.value
