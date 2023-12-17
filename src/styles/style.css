@@ -408,7 +408,7 @@ ul {
     border: 1px solid #ff0000;
     text-align: center;
     border-radius: 10px;
-    width: 280px;
+    width: fit-content;
     margin: 0 auto;
     padding: 8px;
     visibility: hidden;
