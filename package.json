@@ -12,9 +12,12 @@
   "devDependencies": {
     "fast-glob": "^3.3.2",
     "vite": "^5.0.0",
-    "vite-plugin-watch-and-run": "^1.4.4"
+    "vite-plugin-watch-and-run": "^1.4.4",
+    "@vitejs/plugin-vue": "^4.4.0"
   },
   "dependencies": {
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "@heroicons/vue": "^2.0.18",
+    "vue": "^3.3.4"
   }
 }
