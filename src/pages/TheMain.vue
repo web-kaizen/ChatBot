@@ -1,3 +1,7 @@
+<script setup>
+import TheMainContent from "@/components/MainContent/TheMainContent.vue";
+</script>
+
 <template>
-  <h1>Hello</h1>
+  <TheMainContent />
 </template>
