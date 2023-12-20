@@ -1,6 +1,4 @@
 <template>
-  <div class="dialog-component">
-    <section class="main-chat hide">
       <h3 class="chat-title">Gpt-4 (32k context)</h3>
       <section class="chat-dialog"></section>
       <form class="chat-form" id="chat-form">
@@ -24,11 +22,4 @@
                 stroke-linecap="round" />
         </svg>
       </section>
-    </section>
-  </div>
 </template>
-
-
-<script>
-
-</script>

@@ -4,7 +4,6 @@ import TheDialog from  "@/components/Dialog/TheDialog.vue"
 </script>
 
 <template>
-  <div class="main-component">
     <main class="main">
       <section class="main-content">
         <TheSelectBots/>
@@ -14,7 +13,6 @@ import TheDialog from  "@/components/Dialog/TheDialog.vue"
         <TheDialog />
       </section>
     </main>
-  </div>
 </template>
 
 

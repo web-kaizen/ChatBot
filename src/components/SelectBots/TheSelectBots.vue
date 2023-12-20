@@ -1,5 +1,4 @@
 <template>
-  <div class="selects-component">
     <section class="select-bot">
       <select name="type" id="type-bot">
         <option value="ChatGPT" selected>ChatGPT</option>
@@ -15,5 +14,4 @@
         <option value="16k context">16k context</option>
       </select>
     </section>
-  </div>
 </template>
