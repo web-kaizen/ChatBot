@@ -71,8 +71,10 @@ ul {
     border: none;
 }
 
-.new-chat-btn svg {
-    width: 12px;
+.new-chat-btn-icon {
+    width: 18px;
+    height: 18px;
+    transform: rotate(45deg);
 }
 
 .view-sidebar-btn {
@@ -145,6 +147,11 @@ ul {
     font-size: 16px;
     font-weight: 400;
     color: #FFF;
+}
+
+.user-login-btn svg {
+    width: 22px;
+    height: 22px;
 }
 
 .user-after-login {

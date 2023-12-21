@@ -1,3 +1,9 @@
+<script setup>
+import TheSidebar from "../components/Sidebar/TheSidebar.vue";
+</script>
+
 <template>
-  <h1>Hello</h1>
+  <section class="layout">
+    <TheSidebar />
+  </section>
 </template>
