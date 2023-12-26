@@ -6,14 +6,17 @@ import CloseModalButton from "./CloseModalButton.vue";
 import TheFormRegistr from "./TheFormRegistr.vue";
 import TheFormAuth from "./TheFormAuth.vue";
 
-const mode = ref(SIGN_UP);
+const mode = ref(false);
+
+const emit = defineEmits(["toggleModal"]);
+const closeModal = () => emit("toggleModal");
 </script>
 
 <template>
   <section class="popup-login">
     <TheHeaderModal>Bot-X</TheHeaderModal>
-    <TheFormAuth v-show="mode === SIGN_IN" />
-    <TheFormRegistr v-show="mode === SIGN_UP" />
-    <CloseModalButton />
+    <TheFormAuth v-show="!mode" @change-form="mode = !mode" />
+    <TheFormRegistr v-show="mode" @change-form="mode = !mode" />
+    <CloseModalButton @click="closeModal()" />
   </section>
 </template>

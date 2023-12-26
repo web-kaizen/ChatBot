@@ -6,6 +6,9 @@ import {
   ArrowRightEndOnRectangleIcon,
   LockClosedIcon,
 } from "@heroicons/vue/24/outline";
+
+const emit = defineEmits(["changeForm"]);
+const changeForms = () => emit("changeForm");
 </script>
 
 <template>
@@ -20,12 +23,12 @@ import {
           <LockClosedIcon />
         </BaseInput>
       </div>
-      <BaseButton class="form-login_btn" type="button" id="login-btn">
-        Войти
-      </BaseButton>
+      <BaseButton class="form-login_btn">Войти</BaseButton>
       <div class="form-action_line">
-        <BaseLineButton id="forgot-password"> Забыли пароль? </BaseLineButton>
-        <BaseLineButton id="registration"> Зарегистрироваться </BaseLineButton>
+        <BaseLineButton>Забыли пароль?</BaseLineButton>
+        <BaseLineButton @click="changeForms()">
+          Зарегистрироваться
+        </BaseLineButton>
       </div>
     </form>
   </section>
