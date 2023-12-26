@@ -215,6 +215,12 @@ ul {
     background: transparent;
     height: 14px;
     transition: all .5s;
+    width: 14px;
+    height: 14px;
+}
+
+.user-balance-update svg {
+    color: #1C40FF;
 }
 
 .user-actions {
@@ -431,13 +437,16 @@ ul {
 
 .popup-close {
     display: block;
-    width: 15px;
-    height: 15px;
-    fill: #FFF;
+    width: 25px;
+    height: 25px;
     position: absolute;
     top: 20px;
     right: 20px;
     cursor: pointer;
+}
+
+.popup-close svg {
+    color: #fff;
 }
 
 .form-login {
@@ -471,6 +480,12 @@ ul {
 
 .form-input.invalid {
     border-color: #ff0000;
+}
+
+.form-input svg {
+    color: #fff;
+    width: 22px;
+    height: 22px;
 }
 
 .form-input input {
