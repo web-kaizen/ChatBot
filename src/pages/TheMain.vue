@@ -3,12 +3,15 @@ import TheSidebar from "../components/Sidebar/TheSidebar.vue";
 import TheModal from "../components/Modal/TheModal.vue";
 import { ref } from "vue";
 
-const isOpen = ref(false);
+const isOpenModal = ref(false);
 </script>
 
 <template>
   <section class="layout">
-    <TheSidebar @toggle-modal="isOpen = !isOpen" />
-    <TheModal :isOpen="isOpen" @toggle-modal="isOpen = !isOpen" />
+    <TheSidebar @toggle-modal="isOpenModal = !isOpenModal" />
+    <TheModal
+      :isOpen="isOpenModal"
+      @toggle-modal="isOpenModal = !isOpenModal"
+    />
   </section>
 </template>

@@ -10,13 +10,25 @@ const mode = ref(false);
 
 const emit = defineEmits(["toggleModal"]);
 const closeModal = () => emit("toggleModal");
+
+function submitForm(formFields) {
+  console.log(formFields);
+}
 </script>
 
 <template>
   <section class="popup-login">
     <TheHeaderModal>Bot-X</TheHeaderModal>
-    <TheFormAuth v-show="!mode" @change-form="mode = !mode" />
-    <TheFormRegistr v-show="mode" @change-form="mode = !mode" />
+    <TheFormAuth
+      v-show="!mode"
+      @change-form="mode = !mode"
+      @submit-form="submitForm"
+    />
+    <TheFormRegistr
+      v-show="mode"
+      @change-form="mode = !mode"
+      @submit-form="submitForm"
+    />
     <CloseModalButton @click="closeModal()" />
   </section>
 </template>

@@ -6,24 +6,97 @@ import {
   ArrowRightEndOnRectangleIcon,
   LockClosedIcon,
 } from "@heroicons/vue/24/outline";
+import User from "../../libs/User";
+import { ref } from "vue";
+import { validateEmail } from "../../functions/functions";
+
+const user = new User();
+
+const errorEmail = ref(null);
+const errorPassword = ref(null);
 
 const emit = defineEmits(["changeForm"]);
-const changeForms = () => emit("changeForm");
+const changeForms = () => {
+  document.getElementById("authForm").reset();
+  errorAlert = false;
+  errorEmail.value = null;
+  errorPassword.value = null;
+  emit("changeForm");
+};
+
+let deviceId = "deviceId";
+let email = "";
+let password = "";
+let errorAlert = false;
+let errorMsgAlert = "";
+
+function validateForm() {
+  errorAlert = false;
+  errorEmail.value = null;
+  errorPassword.value = null;
+
+  if (!email.trim()) {
+    errorEmail.value = "Заполните поле Электронная почта";
+  } else {
+    if (!validateEmail(email))
+      errorEmail.value = "Электронная почта указана некорректно";
+  }
+  if (!password.trim()) errorPassword.value = "Заполните поле Пароль";
+
+  if (!errorEmail.value && !errorPassword.value) {
+    try {
+      user.makeAuth(deviceId, (result) => console.log(result), email, password);
+    } catch (error) {
+      let json = JSON.parse(error.message);
+
+      if (json.code === "user_not_found") {
+        errorEmail.value = json.text;
+        errorPassword.value = " ";
+      }
+      if (json.code === "invalid_email") errorEmail.value = json.text;
+      if (json.code === "invalid_password") errorPassword.value = json.text;
+      if (json.code === "invalid_email_or_password") {
+        errorAlert = true;
+        errorMsgAlert = json.text;
+        errorEmail.value = " ";
+        errorPassword.value = " ";
+      }
+    }
+  }
+}
 </script>
 
 <template>
   <section>
-    <div class="login-alert-msg"></div>
-    <form class="form-login">
+    <div class="login-alert-msg" :class="{ show: errorAlert }">
+      {{ errorMsgAlert }}
+    </div>
+    <form class="form-login" id="authForm">
       <div class="form-inputs">
-        <BaseInput type="email" placeholder="Электронная почта">
+        <BaseInput
+          @change="email = $event"
+          @input="errorEmail = null"
+          type="email"
+          placeholder="Электронная почта"
+          :isOpenError="Boolean(errorEmail)"
+          :error="errorEmail"
+        >
           <ArrowRightEndOnRectangleIcon />
         </BaseInput>
-        <BaseInput type="password" placeholder="Пароль">
+        <BaseInput
+          @change="password = $event"
+          @input="errorPassword = null"
+          type="password"
+          placeholder="Пароль"
+          :isOpenError="Boolean(errorPassword)"
+          :error="errorPassword"
+        >
           <LockClosedIcon />
         </BaseInput>
       </div>
-      <BaseButton class="form-login_btn">Войти</BaseButton>
+      <BaseButton class="form-login_btn" @click="validateForm()">
+        Войти
+      </BaseButton>
       <div class="form-action_line">
         <BaseLineButton>Забыли пароль?</BaseLineButton>
         <BaseLineButton @click="changeForms()">
