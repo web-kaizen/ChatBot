@@ -10,7 +10,7 @@ import TheDialog from  "@/components/Dialog/TheDialog.vue"
         <h1 class="bot-title">Bot-X</h1>
       </section>
       <section class="main-chat hide">
-        <TheDialog />
+        <TheDialog/>
       </section>
     </main>
 </template>

@@ -52,7 +52,7 @@ export default {
         mode: this.selectedMode
       };
       localStorage.setItem('bots', JSON.stringify(sectorObj));
-    }
+    },
   },
   mounted() {
     try {
@@ -71,7 +71,11 @@ export default {
       return this.bots.find(bot => bot.name === this.selectedBot) || {};
     },
     selectedModelData() {
-      return this.selectedBotData.modelList.find(model => model.name === this.selectedModel) || {};
+      if (this.selectedBotData.modelList) {
+        return this.selectedBotData.modelList.find(model => model.name === this.selectedModel) || {}
+      } else {
+        return null;
+      }
     }
   }
 };
