@@ -27,7 +27,7 @@ let email = ''
 let password = ''
 let confirmPassword = ''
 
-function validateForm() {
+const validateForm = () => {
   errorEmail.value = null
   errorPassword.value = null
   errorConfirmPassword.value = null

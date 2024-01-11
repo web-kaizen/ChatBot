@@ -5,12 +5,33 @@ import BaseInput from '../Base/BaseInput.vue'
 
 const props = defineProps(['email'])
 
+let code = ''
 let counterTimer = 19 // Two minutes
 let checkCode
 
 const stopTimer = ref(false)
 const minutes = ref(0)
 const seconds = ref(20)
+const errorCode = ref(null)
+
+const validateInputCode = () => {
+  errorCode.value = null
+
+  if (code.trim()) {
+    /// Заменить 1111 на checkCode
+    checkCode = 1111
+
+    if (parseInt(code) === checkCode) {
+      stopTimer.value = true
+    } else {
+      errorCode.value = 'Неверный код'
+    }
+  } else {
+    errorCode.value = 'Введите код'
+  }
+
+  document.getElementById('check-input').value = ''
+}
 
 const startTimer = (duration) => {
   let timer = duration
@@ -18,10 +39,6 @@ const startTimer = (duration) => {
   let idInterval = setInterval(() => {
     minutes.value = parseInt(timer / 60, 10)
     seconds.value = parseInt(timer % 60, 10)
-    // minutes.value = minutes.value < 10 ? '0' + minutes.value : minutes.value
-    // seconds.value = seconds.value < 10 ? '0' + seconds.value : seconds.value
-
-    console.log(timer)
 
     if (--timer < 0 || stopTimer.value) {
       clearInterval(idInterval)
@@ -48,14 +65,12 @@ const getCheckCode = (email) => {
 
 const getCheckCodeRepeat = () => {
   checkCode = getCheckCode(props.email)
-  console.log(checkCode)
 }
 
 watch(
   () => props.email,
   () => {
     checkCode = getCheckCode(props.email)
-    console.log(checkCode)
   }
 )
 </script>
@@ -69,7 +84,15 @@ watch(
       <p class="check-description">
         Напишите его, чтобы подтвердить, что это вы, а не кто-то другой входит в личный кабинет
       </p>
-      <BaseInput type="text" placeholder="Введите код" />
+      <BaseInput
+        @change="code = $event"
+        @input="errorCode = null"
+        id="check-input"
+        type="text"
+        placeholder="Введите код"
+        :isOpenError="Boolean(errorCode)"
+        :error="errorCode"
+      />
       <p class="check-info" v-show="!stopTimer">
         Повторить через
         <span class="check-info_timer">
@@ -79,7 +102,7 @@ watch(
       <button type="button" class="check-link" v-show="stopTimer" @click="getCheckCodeRepeat">
         Отправить код заново
       </button>
-      <BaseButton class="check-button">Подтвердить</BaseButton>
+      <BaseButton class="check-button" @click="validateInputCode()">Подтвердить</BaseButton>
     </section>
   </section>
 </template>
