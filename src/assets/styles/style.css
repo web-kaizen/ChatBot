@@ -31,6 +31,7 @@ ul {
     background: #1C40FF;
     color: #FFFFFF;
     transition: all .3s;
+    border: none;
 }
 
 .button:hover {
@@ -467,6 +468,7 @@ ul {
     align-items: center;
     gap: 14px;
     position: relative;
+    width: 100%;
 }
 
 .form-input.hide {
@@ -605,11 +607,6 @@ ul {
     color: #FFF;
 }
 
-.check-data {
-    width: 100%;
-    position: relative;
-}
-
 .check-input {
     width: 100%;
     padding: 10px 0 10px 12px;
@@ -649,9 +646,6 @@ ul {
 
 .check-button {
     font-size: 16px;
-    font-weight: 400;
-    border: none;
-    color: #FFF;
     height: 46px;
     width: 100%;
 }

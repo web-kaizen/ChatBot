@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { SIGN_IN, SIGN_UP } from "../../functions/constants";
 import TheHeaderModal from "./TheHeaderModal.vue";
 import CloseModalButton from "./CloseModalButton.vue";
 import TheFormRegistr from "./TheFormRegistr.vue";
@@ -8,12 +7,9 @@ import TheFormAuth from "./TheFormAuth.vue";
 
 const mode = ref(false);
 
-const emit = defineEmits(["toggleModal"]);
+const emit = defineEmits(["toggleModal", "userFromForm"]);
 const closeModal = () => emit("toggleModal");
-
-function submitForm(formFields) {
-  console.log(formFields);
-}
+const sendUserToModal = (user) => emit("userFromForm", user);
 </script>
 
 <template>
@@ -22,12 +18,13 @@ function submitForm(formFields) {
     <TheFormAuth
       v-show="!mode"
       @change-form="mode = !mode"
-      @submit-form="submitForm"
+      @toggle-modal="closeModal()"
     />
     <TheFormRegistr
       v-show="mode"
       @change-form="mode = !mode"
-      @submit-form="submitForm"
+      @toggle-modal="closeModal()"
+      @user-to-modal="sendUserToModal"
     />
     <CloseModalButton @click="closeModal()" />
   </section>

@@ -15,7 +15,7 @@ const user = new User();
 const errorEmail = ref(null);
 const errorPassword = ref(null);
 
-const emit = defineEmits(["changeForm"]);
+const emit = defineEmits(["changeForm", "toggleModal"]);
 const changeForms = () => {
   document.getElementById("authForm").reset();
   errorAlert = false;
@@ -23,6 +23,7 @@ const changeForms = () => {
   errorPassword.value = null;
   emit("changeForm");
 };
+const closeModal = () => emit("toggleModal");
 
 let deviceId = "deviceId";
 let email = "";
@@ -46,6 +47,8 @@ function validateForm() {
   if (!errorEmail.value && !errorPassword.value) {
     try {
       user.makeAuth(deviceId, (result) => console.log(result), email, password);
+
+      closeModal();
     } catch (error) {
       let json = JSON.parse(error.message);
 
