@@ -1,57 +1,63 @@
 <script setup>
+import { ref, watch } from 'vue'
 import BaseButton from '../Base/BaseButton.vue'
 import BaseInput from '../Base/BaseInput.vue'
 
-const props = defineProps({
-  email: {
-    required: true,
-    type: String
-  }
-})
+const props = defineProps(['email'])
 
-let counterTimer = 60 * 2 // Two minutes
-let stopTimer = false
-// let checkCode
-let minutes = 0
-let seconds = 0
+let counterTimer = 19 // Two minutes
+let checkCode
+
+const stopTimer = ref(false)
+const minutes = ref(0)
+const seconds = ref(20)
 
 const startTimer = (duration) => {
   let timer = duration
 
   let idInterval = setInterval(() => {
-    minutes = parseInt(timer / 60, 10)
-    seconds = parseInt(timer % 60, 10)
-    minutes = minutes < 10 ? '0' + minutes : minutes
-    seconds = seconds < 10 ? '0' + seconds : seconds
+    minutes.value = parseInt(timer / 60, 10)
+    seconds.value = parseInt(timer % 60, 10)
+    // minutes.value = minutes.value < 10 ? '0' + minutes.value : minutes.value
+    // seconds.value = seconds.value < 10 ? '0' + seconds.value : seconds.value
 
     console.log(timer)
 
-    if (--timer < 0 || stopTimer) {
-      // checkInfo.style.display = 'none'
-      // display.textContent = ''
-      // checkLink.style.display = 'block'
-
+    if (--timer < 0 || stopTimer.value) {
       clearInterval(idInterval)
+      stopTimer.value = true
     }
   }, 1000)
 }
 
 const sendCheckCode = (email) => {
-  const code = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
-
-  stopTimer = false
-
   /* Реализовать отправку кода на указанный email */
   console.log(email)
+}
 
+const getCheckCode = (email) => {
+  const code = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
+
+  stopTimer.value = false
+
+  sendCheckCode(email)
   startTimer(counterTimer)
 
   return code
 }
 
-if (props.email) {
-  sendCheckCode(props.email)
+const getCheckCodeRepeat = () => {
+  checkCode = getCheckCode(props.email)
+  console.log(checkCode)
 }
+
+watch(
+  () => props.email,
+  () => {
+    checkCode = getCheckCode(props.email)
+    console.log(checkCode)
+  }
+)
 </script>
 
 <template>
@@ -64,11 +70,13 @@ if (props.email) {
         Напишите его, чтобы подтвердить, что это вы, а не кто-то другой входит в личный кабинет
       </p>
       <BaseInput type="text" placeholder="Введите код" />
-      <p class="check-info">
+      <p class="check-info" v-show="!stopTimer">
         Повторить через
-        <span class="check-info_timer">{{ minutes }}:{{ seconds }}</span>
+        <span class="check-info_timer">
+          {{ minutes < 10 ? '0' + minutes : minutes }}:{{ seconds < 10 ? '0' + seconds : seconds }}
+        </span>
       </p>
-      <button type="button" class="check-link" @click="sendCheckCode(email)">
+      <button type="button" class="check-link" v-show="stopTimer" @click="getCheckCodeRepeat">
         Отправить код заново
       </button>
       <BaseButton class="check-button">Подтвердить</BaseButton>

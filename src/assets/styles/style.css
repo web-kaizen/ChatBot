@@ -636,8 +636,11 @@ ul {
     color: #FFF;
 }
 
+.check-info {
+    border-bottom: 1px solid transparent;
+}
+
 .check-link {
-    display: none;
     border: none;
     background: transparent;
     border-bottom: 1px solid #FFF;
