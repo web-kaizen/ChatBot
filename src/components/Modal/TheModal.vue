@@ -43,6 +43,6 @@ const receiveUserFromForm = ({ data, mode }) => {
       @toggle-modal="closeModal()"
       @user-from-form="receiveUserFromForm"
     />
-    <TheModalChecked v-show="isRegistSuccess" :email="receivedUser" />
+    <TheModalChecked v-show="isRegistSuccess" @toggle-modal="closeModal()" :email="receivedUser" />
   </section>
 </template>

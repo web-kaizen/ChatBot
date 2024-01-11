@@ -1,9 +1,10 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { defineProps, defineEmits, ref, watch } from 'vue'
 import BaseButton from '../Base/BaseButton.vue'
 import BaseInput from '../Base/BaseInput.vue'
 
 const props = defineProps(['email'])
+const emit = defineEmits(['toggle-modal'])
 
 let code = ''
 let counterTimer = 19 // Two minutes
@@ -23,6 +24,7 @@ const validateInputCode = () => {
 
     if (parseInt(code) === checkCode) {
       stopTimer.value = true
+      emit('toggle-modal')
     } else {
       errorCode.value = 'Неверный код'
     }
