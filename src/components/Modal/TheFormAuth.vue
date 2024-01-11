@@ -12,13 +12,13 @@ const user = new User()
 const errorEmail = ref(null)
 const errorPassword = ref(null)
 
-const emit = defineEmits(['changeForm', 'toggleModal', 'userToModal'])
+const emit = defineEmits(['change-form', 'user-to-modal'])
 const changeForms = () => {
   document.getElementById('authForm').reset()
   errorAlert = false
   errorEmail.value = null
   errorPassword.value = null
-  emit('changeForm')
+  emit('change-form')
 }
 
 let deviceId = 'deviceId'
@@ -43,7 +43,7 @@ function validateForm() {
     try {
       user.makeAuth(
         deviceId,
-        (data) => emit('userToModal', { data, mode: 'Auth' }),
+        (data) => emit('user-to-modal', { data, mode: 'Auth' }),
         email,
         password
       )

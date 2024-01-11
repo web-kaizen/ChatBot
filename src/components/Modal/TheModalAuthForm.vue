@@ -7,26 +7,16 @@ import TheFormAuth from './TheFormAuth.vue'
 
 const mode = ref(false)
 
-const emit = defineEmits(['toggleModal', 'userFromForm'])
-const closeModal = () => emit('toggleModal')
-const sendUserToModal = (data) => emit('userFromForm', data)
+const emit = defineEmits(['toggle-modal', 'user-from-form'])
+const closeModal = () => emit('toggle-modal')
+const sendUserToModal = (data) => emit('user-from-form', data)
 </script>
 
 <template>
   <section class="popup-login">
     <TheHeaderModal>Bot-X</TheHeaderModal>
-    <TheFormAuth
-      v-show="!mode"
-      @change-form="mode = !mode"
-      @toggle-modal="closeModal()"
-      @user-to-modal="sendUserToModal"
-    />
-    <TheFormRegistr
-      v-show="mode"
-      @change-form="mode = !mode"
-      @toggle-modal="closeModal()"
-      @user-to-modal="sendUserToModal"
-    />
+    <TheFormAuth v-show="!mode" @change-form="mode = !mode" @user-to-modal="sendUserToModal" />
+    <TheFormRegistr v-show="mode" @change-form="mode = !mode" @user-to-modal="sendUserToModal" />
     <CloseModalButton @click="closeModal()" />
   </section>
 </template>

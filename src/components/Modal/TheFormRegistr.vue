@@ -13,13 +13,13 @@ const errorEmail = ref(null)
 const errorPassword = ref(null)
 const errorConfirmPassword = ref(null)
 
-const emit = defineEmits(['changeForm', 'userToModal'])
+const emit = defineEmits(['change-form', 'user-to-modal'])
 const changeForms = () => {
   document.getElementById('regForm').reset()
   errorEmail.value = null
   errorPassword.value = null
   errorConfirmPassword.value = null
-  emit('changeForm')
+  emit('change-form')
 }
 
 let deviceId = 'deviceId'
@@ -44,7 +44,7 @@ function validateForm() {
     try {
       user.makeReg(
         deviceId,
-        (data) => emit('userToModal', { data, mode: 'Reg' }),
+        (data) => emit('user-to-modal', { data, mode: 'Reg' }),
         email,
         password,
         confirmPassword

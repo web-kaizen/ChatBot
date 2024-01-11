@@ -1,8 +1,24 @@
 <script setup>
 import { defineProps } from 'vue'
 import { ArrowPathIcon } from '@heroicons/vue/24/outline'
+import User from '../../libs/User'
+
+const user = new User()
 
 const { email } = defineProps(['email'])
+
+const emit = defineEmits(['toggle-login-card'])
+const changeCard = () => emit('toggle-login-card')
+
+const logOut = () => {
+  try {
+    user.logout(changeCard)
+  } catch (error) {
+    let json = JSON.parse(error.message)
+
+    console.error(json.text)
+  }
+}
 </script>
 
 <template>
@@ -21,7 +37,7 @@ const { email } = defineProps(['email'])
     </section>
     <section class="user-actions">
       <button class="topup-balance">Пополнить</button>
-      <button class="user-logout">Выйти</button>
+      <button class="user-logout" @click="logOut()">Выйти</button>
     </section>
   </section>
 </template>

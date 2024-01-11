@@ -12,9 +12,9 @@ const props = defineProps({
 const receivedUser = ref('')
 const isRegistSuccess = ref(false)
 
-const emit = defineEmits(['toggleModal', 'sendEmail'])
-const saveEmail = (email) => emit('sendEmail', email)
-const closeModal = () => emit('toggleModal')
+const emit = defineEmits(['toggle-modal', 'send-email'])
+const saveEmail = (email) => emit('send-email', email)
+const closeModal = () => emit('toggle-modal')
 
 const receiveUserFromForm = ({ data, mode }) => {
   if (mode === 'Auth') {
