@@ -17,6 +17,9 @@ const saveEmail = (email) => emit('send-email', email)
 const closeModal = () => emit('toggle-modal')
 
 const receiveUserFromForm = ({ data, mode }) => {
+  document.getElementById('regForm').reset()
+  document.getElementById('authForm').reset()
+
   if (mode === 'Auth') {
     if (data.email) {
       saveEmail(data.email)
