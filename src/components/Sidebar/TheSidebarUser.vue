@@ -1,15 +1,25 @@
 <script setup>
-import TheUserLogin from "./TheUserLogin.vue";
-import TheUserAfterLogin from "./TheUserAfterLogin.vue";
+import { defineProps, ref, watch, defineEmits } from 'vue'
+import TheUserLogin from './TheUserLogin.vue'
+import TheUserAfterLogin from './TheUserAfterLogin.vue'
 
-const isLogin = false;
-const emit = defineEmits(["toggleModal"]);
-const openModal = () => emit("toggleModal");
+const props = defineProps(['user'])
+const emit = defineEmits(['toggle-modal'])
+const openModal = () => emit('toggle-modal')
+
+const isLogin = ref(!!props.user)
+
+watch(
+  () => props.user,
+  (newValue) => {
+    isLogin.value = newValue
+  }
+)
 </script>
 
 <template>
   <section class="sidebar-user">
-    <TheUserLogin v-show="!isLogin" @toggle-modal="openModal()" />
-    <TheUserAfterLogin v-show="isLogin" />
+    <TheUserLogin v-show="!isLogin" @toggle-modal="openModal" />
+    <TheUserAfterLogin v-show="isLogin" :email="props.user" />
   </section>
 </template>

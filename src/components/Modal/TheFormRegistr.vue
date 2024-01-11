@@ -1,75 +1,65 @@
 <script setup>
-import BaseButton from "../Base/BaseButton.vue";
-import BaseLineButton from "../Base/BaseLineButton.vue";
-import BaseInput from "../Base/BaseInput.vue";
-import {
-  ArrowRightEndOnRectangleIcon,
-  LockClosedIcon,
-} from "@heroicons/vue/24/outline";
-import User from "../../libs/User";
-import { ref } from "vue";
-import { validateEmail } from "../../functions/functions";
+import BaseButton from '../Base/BaseButton.vue'
+import BaseLineButton from '../Base/BaseLineButton.vue'
+import BaseInput from '../Base/BaseInput.vue'
+import { ArrowRightEndOnRectangleIcon, LockClosedIcon } from '@heroicons/vue/24/outline'
+import User from '../../libs/User'
+import { ref } from 'vue'
+import { validateEmail } from '../../functions/functions'
 
-const user = new User();
+const user = new User()
 
-const errorEmail = ref(null);
-const errorPassword = ref(null);
-const errorConfirmPassword = ref(null);
+const errorEmail = ref(null)
+const errorPassword = ref(null)
+const errorConfirmPassword = ref(null)
 
-const emit = defineEmits(["changeForm", "userToModal"]);
+const emit = defineEmits(['changeForm', 'userToModal'])
 const changeForms = () => {
-  document.getElementById("regForm").reset();
-  errorEmail.value = null;
-  errorPassword.value = null;
-  errorConfirmPassword.value = null;
-  emit("changeForm");
-};
+  document.getElementById('regForm').reset()
+  errorEmail.value = null
+  errorPassword.value = null
+  errorConfirmPassword.value = null
+  emit('changeForm')
+}
 
-let deviceId = "deviceId";
-let email = "";
-let password = "";
-let confirmPassword = "";
+let deviceId = 'deviceId'
+let email = ''
+let password = ''
+let confirmPassword = ''
 
 function validateForm() {
-  errorEmail.value = null;
-  errorPassword.value = null;
-  errorConfirmPassword.value = null;
+  errorEmail.value = null
+  errorPassword.value = null
+  errorConfirmPassword.value = null
 
   if (!email.trim()) {
-    errorEmail.value = "Заполните поле Электронная почта";
+    errorEmail.value = 'Заполните поле Электронная почта'
   } else {
-    if (!validateEmail(email))
-      errorEmail.value = "Электронная почта указана некорректно";
+    if (!validateEmail(email)) errorEmail.value = 'Электронная почта указана некорректно'
   }
-  if (!password.trim()) errorPassword.value = "Заполните поле Пароль";
-  if (!confirmPassword.trim())
-    errorConfirmPassword.value = "Заполните поле Повторите пароль";
+  if (!password.trim()) errorPassword.value = 'Заполните поле Пароль'
+  if (!confirmPassword.trim()) errorConfirmPassword.value = 'Заполните поле Повторите пароль'
 
-  if (
-    !errorEmail.value &&
-    !errorPassword.value &&
-    !errorConfirmPassword.value
-  ) {
+  if (!errorEmail.value && !errorPassword.value && !errorConfirmPassword.value) {
     try {
       user.makeReg(
         deviceId,
-        (data) => emit("userToModal", data),
+        (data) => emit('userToModal', { data, mode: 'Reg' }),
         email,
         password,
         confirmPassword
-      );
+      )
     } catch (error) {
-      let json = JSON.parse(error.message);
+      let json = JSON.parse(error.message)
 
-      if (json.code === "invalid_email") errorEmail.value = json.text;
-      if (json.code === "invalid_password") errorPassword.value = json.text;
-      if (json.code === "invalid_confirm_password")
-        errorConfirmPassword.value = json.text;
-      if (json.code === "invalid_passwords") {
-        errorPassword.value = json.text;
-        errorConfirmPassword.value = json.text;
+      if (json.code === 'invalid_email') errorEmail.value = json.text
+      if (json.code === 'invalid_password') errorPassword.value = json.text
+      if (json.code === 'invalid_confirm_password') errorConfirmPassword.value = json.text
+      if (json.code === 'invalid_passwords') {
+        errorPassword.value = json.text
+        errorConfirmPassword.value = json.text
       }
-      if (json.code === "email_busy") errorEmail.value = json.text;
+      if (json.code === 'email_busy') errorEmail.value = json.text
     }
   }
 }
@@ -110,13 +100,9 @@ function validateForm() {
           <LockClosedIcon />
         </BaseInput>
       </div>
-      <BaseButton class="form-login_btn" @click="validateForm()">
-        Зарегистрироваться
-      </BaseButton>
+      <BaseButton class="form-login_btn" @click="validateForm()"> Зарегистрироваться </BaseButton>
       <div class="form-action_line">
-        <BaseLineButton @click="changeForms()">
-          У вас уже есть аккаунт?
-        </BaseLineButton>
+        <BaseLineButton @click="changeForms()"> У вас уже есть аккаунт? </BaseLineButton>
       </div>
     </form>
   </section>

@@ -1,15 +1,15 @@
 <script setup>
-import { ref } from "vue";
-import TheHeaderModal from "./TheHeaderModal.vue";
-import CloseModalButton from "./CloseModalButton.vue";
-import TheFormRegistr from "./TheFormRegistr.vue";
-import TheFormAuth from "./TheFormAuth.vue";
+import { ref } from 'vue'
+import TheHeaderModal from './TheHeaderModal.vue'
+import CloseModalButton from './CloseModalButton.vue'
+import TheFormRegistr from './TheFormRegistr.vue'
+import TheFormAuth from './TheFormAuth.vue'
 
-const mode = ref(false);
+const mode = ref(false)
 
-const emit = defineEmits(["toggleModal", "userFromForm"]);
-const closeModal = () => emit("toggleModal");
-const sendUserToModal = (user) => emit("userFromForm", user);
+const emit = defineEmits(['toggleModal', 'userFromForm'])
+const closeModal = () => emit('toggleModal')
+const sendUserToModal = (data) => emit('userFromForm', data)
 </script>
 
 <template>
@@ -19,6 +19,7 @@ const sendUserToModal = (user) => emit("userFromForm", user);
       v-show="!mode"
       @change-form="mode = !mode"
       @toggle-modal="closeModal()"
+      @user-to-modal="sendUserToModal"
     />
     <TheFormRegistr
       v-show="mode"

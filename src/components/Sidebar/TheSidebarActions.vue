@@ -1,8 +1,8 @@
 <script setup>
-import BaseButton from "../Base/BaseButton.vue";
-import TheViewSidebarList from "./theviewsidebarlist.vue";
-import ViewSidebarItem from "./ViewSidebarItem.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
+import BaseButton from '../Base/BaseButton.vue'
+import TheViewSidebarList from './TheViewSidebarList.vue'
+import ViewSidebarItem from './ViewSidebarItem.vue'
+import { PlusIcon } from '@heroicons/vue/24/outline'
 </script>
 
 <template>

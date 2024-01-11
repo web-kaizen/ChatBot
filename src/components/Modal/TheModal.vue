@@ -1,27 +1,36 @@
 <script setup>
-import { ref } from "vue";
-import TheModalAuthForm from "./TheModalAuthForm.vue";
-import TheModalChecked from "./TheModalChecked.vue";
+import { ref } from 'vue'
+import TheModalAuthForm from './TheModalAuthForm.vue'
+import TheModalChecked from './TheModalChecked.vue'
 
 const props = defineProps({
   isOpen: {
-    isOpen: Boolean,
-  },
-});
+    isOpen: Boolean
+  }
+})
 
-const receivedUser = ref("");
-const isRegistSuccess = ref(false);
+const receivedUser = ref('')
+const isRegistSuccess = ref(false)
 
-const receiveUserFromForm = ({ email }) => {
-  receivedUser.value = email;
+const emit = defineEmits(['toggleModal', 'sendEmail'])
+const saveEmail = (email) => emit('sendEmail', email)
+const closeModal = () => emit('toggleModal')
 
-  receivedUser
-    ? (isRegistSuccess.value = true)
-    : (isRegistSuccess.value = false);
-};
-
-const emit = defineEmits(["toggleModal"]);
-const closeModal = () => emit("toggleModal");
+const receiveUserFromForm = ({ data, mode }) => {
+  if (mode === 'Auth') {
+    if (data.email) {
+      saveEmail(data.email)
+      closeModal()
+    }
+  } else if (mode === 'Reg') {
+    if (data.email) {
+      receivedUser.value = data.email
+      isRegistSuccess.value = true
+    } else {
+      isRegistSuccess.value = false
+    }
+  }
+}
 </script>
 
 <template>

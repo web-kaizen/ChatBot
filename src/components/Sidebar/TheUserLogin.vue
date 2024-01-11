@@ -1,8 +1,8 @@
 <script setup>
-import { ArrowRightEndOnRectangleIcon } from "@heroicons/vue/24/outline";
+import { ArrowRightEndOnRectangleIcon } from '@heroicons/vue/24/outline'
 
-const emit = defineEmits(["toggleModal"]);
-const openModal = () => emit("toggleModal");
+const emit = defineEmits(['toggle-modal'])
+const openModal = () => emit('toggle-modal')
 </script>
 
 <template>
