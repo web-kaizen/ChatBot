@@ -44,7 +44,10 @@ const validateForm = () => {
     try {
       user.makeReg(
         deviceId,
-        (data) => emit('user-to-modal', { data, mode: 'Reg' }),
+        (data) => {
+          emit('user-to-modal', { data, mode: 'Reg' })
+          changeForms()
+        },
         email,
         password,
         confirmPassword
