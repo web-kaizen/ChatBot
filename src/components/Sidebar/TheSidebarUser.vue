@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, ref, watch, defineEmits } from 'vue'
-import TheUserLogin from './TheUserLogin.vue'
-import TheUserAfterLogin from './TheUserAfterLogin.vue'
+import TheButtonUserLogin from './TheButtonUserLogin.vue'
+import ThePersonalCard from './ThePersonalCard.vue'
 
 const props = defineProps(['user'])
 const emit = defineEmits(['toggle-modal', 'update-props'])
@@ -24,7 +24,7 @@ watch(
 
 <template>
   <section class="sidebar-user">
-    <TheUserLogin v-show="!isLogin" @toggle-modal="openModal" />
-    <TheUserAfterLogin v-show="isLogin" :email="props.user" @toggle-login-card="logOut()" />
+    <TheButtonUserLogin v-show="!isLogin" @toggle-modal="openModal" />
+    <ThePersonalCard v-show="isLogin" :email="props.user" @toggle-login-card="logOut()" />
   </section>
 </template>

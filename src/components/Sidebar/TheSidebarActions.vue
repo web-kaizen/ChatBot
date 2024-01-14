@@ -1,7 +1,7 @@
 <script setup>
 import BaseButton from '../Base/BaseButton.vue'
-import TheViewSidebarList from './TheViewSidebarList.vue'
-import ViewSidebarItem from './ViewSidebarItem.vue'
+import TheButtonControlList from './TheButtonControlList.vue'
+import ButtonControlItem from './ButtonControlItem.vue'
 import { PlusIcon } from '@heroicons/vue/24/outline'
 </script>
 
@@ -12,8 +12,8 @@ import { PlusIcon } from '@heroicons/vue/24/outline'
       <span>Новый чат</span>
     </BaseButton>
     <button class="view-sidebar-btn">
-      <ViewSidebarItem />
+      <ButtonControlItem />
     </button>
-    <TheViewSidebarList />
+    <TheButtonControlList />
   </section>
 </template>

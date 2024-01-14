@@ -1,14 +1,14 @@
 <script setup>
-import ViewSidebarItem from "./ViewSidebarItem.vue";
+import ButtonControlItem from './ButtonControlItem.vue'
 </script>
 
 <template>
   <ul class="view-sidebar-list">
     <li class="view-sidebar-item view-sidebar-left active">
-      <ViewSidebarItem />
+      <ButtonControlItem />
     </li>
     <li class="view-sidebar-item view-sidebar-right">
-      <ViewSidebarItem />
+      <ButtonControlItem />
     </li>
   </ul>
 </template>
