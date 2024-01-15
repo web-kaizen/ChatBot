@@ -1,4 +1,11 @@
+import data from "@/assets/db/bots.json";
+
+export function getData() {
+    return data;
+}
+
 export const validateEmail = (email) => {
+
     return String(email)
         .toLowerCase()
         .match(

@@ -320,7 +320,7 @@ ul {
 }
 
 .main-chat.hide {
-    display: none;
+    /*display: none;*/
 }
 
 .chat-title {
@@ -341,6 +341,15 @@ ul {
     padding: 10px 20px;
     display: flex;
     gap: 17px;
+}
+
+.chat-form__img {
+    width: 30px;
+}
+
+
+.chat-form__submit {
+    width: 30px;
 }
 
 .chat-form__input {

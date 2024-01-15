@@ -3,5 +3,9 @@ import TheMain from "./pages/TheMain.vue";
 </script>
 
 <template>
-  <TheMain />
+  <section class="layout">
+    <TheMain />
+  </section>
+
 </template>
+
