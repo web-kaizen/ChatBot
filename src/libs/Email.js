@@ -13,22 +13,27 @@ export default class Email {
                 'Authorization': `Bearer ${token}`
             },
         })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('Результат (200)');
-                    return response.json();
-                } else if (response.status === 401) {
-                    throw new Error('Ошибка авторизации (401)');
-                } else if (response.status === 404) {
-                    throw new Error('Не удалось найти данные (404)');
-                } else if (response.status === 500) {
-                    throw new Error('Server error (500)');
-                } else {
-                    console.log('Без статуса хз..');
+            .then(async function(response) {
+                let status = response.status;
+                if (status === 200) {
+                    return {
+                        "status": true
+                    };
+                } else if (status === 401) {
+                    throw new Error('invalid_access_token');
+                } else if (status === 404) {
+                    let json = await response.json();
+                    if (json['error']['code'] === 'version_not_found') {
+                        throw new Error('version_not_found');
+                    } else if (json['error']['code'] === 'application_not_found') {
+                        throw new Error('application_not_found');
+                    }
+                } else if (status === 500) {
+                    throw new Error('server_error');
                 }
             })
-            .then(data => callback(data))
-            .catch(error => console.log(error));
+            .then(data => callback(data));
+
     }
 
     resend(token, callback) {
@@ -127,11 +132,11 @@ let token = '869539d6ca02ae7a90593fa2392e2422dfd2546052b7a6b7ffa3b85f185a6e9d'
 let email2 = 'evgcursed@gmail.com'
 let code = 12345
 
-// console.log('Method: check (working)')
-// email.check(token, myCallback)
+console.log('Method: check (working)')
+email.check(token, myCallback)
 
 // console.log('Method: resend')
 // email.resend(token, myCallback)
 
-console.log('Method: verify')
-email.verify(token, email2, code, myCallback)
+// console.log('Method: verify')
+// email.verify(token, email2, code, myCallback)
