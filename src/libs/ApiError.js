@@ -8,9 +8,13 @@ export default class ApiError {
         'invalid_confirm_password': 'Неверный пароль подтверждения',
         'invalid_passwords': 'Пароли не совпадают',
         'invalid_token': 'Невалидный токен',
+        'invalid_access_token': 'Invalid access token',
+        'version_not_found': 'Version not found',
+        'application_not_found': 'Application not found',
         'invalid_code': 'Невалидный код',
         'user_not_found': 'Пользователь не найден',
         'email_busy': 'Электронный адрес занят',
+        'email_access_denied': 'Email access denied',
         'server_error': 'Internal server error',
     };
 

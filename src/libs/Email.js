@@ -120,21 +120,3 @@ export default class Email {
             .then(data => callback(data));
     }
 }
-
-const myCallback = (value) => {
-    console.log(value)
-};
-
-let email = new Email();
-let token = '869539d6ca02ae7a90593fa2392e2422dfd2546052b7a6b7ffa3b85f185a6e9d';
-let email2 = 'evgcursed@gmail.com';
-let code = 12345;
-
-console.log('Method: check (working)');
-email.check(token, myCallback);
-
-// console.log('Method: resend')
-// email.resend(token, myCallback)
-
-// console.log('Method: verify')
-// email.verify(token, email2, code, myCallback)
