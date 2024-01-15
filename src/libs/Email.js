@@ -5,7 +5,7 @@ export default class Email {
         if (typeof token !== 'string') ApiError.return('invalid_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = 'http://core.webstktw.beget.tech/api/v0/apps/2750bc42-702e-4cbe-bae5-798f171389e1/users/email-verification/check'
+        let url = 'http://85.215.65.210:8081/users/email-verification/check'
 
         fetch(url, {
             method: 'GET',
@@ -30,12 +30,20 @@ export default class Email {
             .then(data => callback(data))
             .catch(error => console.log(error));
     }
+    resend(token, callback) {
+
+    }
+    verify(token, email, code, callback) {
+
+    }
 }
 const myCallback = (value) => {
     console.log("Значение:", value);
 };
 
 let email = new Email()
-let token = 'fc1ff79a3cec2f38aea005998b9c9d4ba73f01522773f2722791c4a8fa986849'
+let token = '869539d6ca02ae7a90593fa2392e2422dfd2546052b7a6b7ffa3b85f185a6e9d'
 
 email.check(token, myCallback)
+email.resend()
+email.verify()
