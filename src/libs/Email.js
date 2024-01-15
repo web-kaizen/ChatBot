@@ -20,20 +20,19 @@ export default class Email {
                         "status": true
                     };
                 } else if (status === 401) {
-                    throw new Error('invalid_access_token');
+                    ApiError.return('invalid_access_token');
                 } else if (status === 404) {
                     let json = await response.json();
                     if (json['error']['code'] === 'version_not_found') {
-                        throw new Error('version_not_found');
+                        ApiError.return('version_not_found');
                     } else if (json['error']['code'] === 'application_not_found') {
-                        throw new Error('application_not_found');
+                        ApiError.return('application_not_found');
                     }
                 } else if (status === 500) {
-                    throw new Error('server_error');
+                    ApiError.return('server_error');
                 }
             })
             .then(data => callback(data));
-
     }
 
     resend(token, callback) {
@@ -56,7 +55,7 @@ export default class Email {
                         "ttl": 120
                     };
                 } else if (status === 401) {
-                    throw new Error('Ошибка авторизации (401)');
+                    ApiError.return('invalid_access_token');
                 } else if (status === 429) {
                     let json = await response.json();
                     return {
@@ -64,9 +63,7 @@ export default class Email {
                         "ttl": json['error']['delay']
                     };
                 } else if (status === 500) {
-                    throw new Error('Server error (500)');
-                } else {
-                    console.log('Без статуса хз..');
+                    ApiError.return('server_error');
                 }
             })
             .then(data => callback(data));
@@ -101,39 +98,40 @@ export default class Email {
                 } else if (status === 400) {
                     let json = await response.json();
                     if (json['error']['code'] === 'invalid_code') {
-                        throw new Error('invalid_code');
+                        ApiError.return('invalid_code');
                     } else if (json['error']['code'] === 'invalid_email') {
-                        throw new Error('invalid_email');
+                        ApiError.return('invalid_email');
                     }
                 } else if (status === 401) {
-                    throw new Error('invalid_access_token')
+                    ApiError.return('invalid_access_token');
                 } else if (status === 403) {
-                    throw new Error('email_access_denied')
+                    ApiError.return('email_access_denied');
                 } else if (status === 404) {
                     let json = await response.json();
                     if (json['error']['code'] === 'version_not_found') {
-                        throw new Error('version_not_found');
+                        ApiError.return('version_not_found');
                     } else if (json['error']['code'] === 'application_not_found') {
-                        throw new Error('application_not_found');
+                        ApiError.return('application_not_found');
                     }
                 } else if (status === 500) {
-                    throw new Error('server_error')
+                    ApiError.return('server_error');
                 }
             })
             .then(data => callback(data));
     }
 }
+
 const myCallback = (value) => {
     console.log(value)
 };
 
-let email = new Email()
-let token = '869539d6ca02ae7a90593fa2392e2422dfd2546052b7a6b7ffa3b85f185a6e9d'
-let email2 = 'evgcursed@gmail.com'
-let code = 12345
+let email = new Email();
+let token = '869539d6ca02ae7a90593fa2392e2422dfd2546052b7a6b7ffa3b85f185a6e9d';
+let email2 = 'evgcursed@gmail.com';
+let code = 12345;
 
-console.log('Method: check (working)')
-email.check(token, myCallback)
+console.log('Method: check (working)');
+email.check(token, myCallback);
 
 // console.log('Method: resend')
 // email.resend(token, myCallback)
