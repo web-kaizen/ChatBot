@@ -59,7 +59,7 @@ export default class Email {
                 } else if (status === 429) {
                     let json = await response.json();
                     return {
-                        "status": true,
+                        "status": false,
                         "ttl": json['error']['delay']
                     };
                 } else if (status === 500) {
