@@ -1,10 +1,9 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-
+import { onMounted, ref, watch } from 'vue'
 import SelectBotsItem from '@/components/SelectBots/SelectBotsItem.vue'
-import { URL } from '../../constants/constants'
-import { getData } from '@/functions/functions'
+import { useBots } from '@/store/bots'
 
+const allBots = useBots()
 const listBots = ref([])
 const listModels = ref([])
 const listModes = ref([])
@@ -12,9 +11,9 @@ const selectedBot = ref('')
 const selectedModel = ref('')
 const selectedMode = ref('')
 
-const renderSelect = (list) => {
+const renderSelect = (bots) => {
   const sectorObj = localStorage.getItem('bots') ? JSON.parse(localStorage.getItem('bots')) : {}
-  listBots.value = list
+  listBots.value = bots
   listModels.value = listBots.value[0].modelList
   listModes.value = listModels.value[0].modeList
 
@@ -46,16 +45,13 @@ const saveToLocalStorage = () => {
   localStorage.setItem('bots', JSON.stringify(sectorObj))
 }
 
-onMounted(() => {
-  try {
-    // В будущем здесь вызвать метод getList из библиотеки Bot.js
-    getData(URL).then((data) => {
-      renderSelect(data)
-    })
-  } catch (error) {
-    console.error(error)
-  }
-})
+watch(
+  () => allBots,
+  () => {
+    renderSelect(allBots.getBots)
+  },
+  { deep: true }
+)
 
 watch(
   () => selectedBot,
@@ -76,6 +72,10 @@ watch(
   },
   { deep: true }
 )
+
+onMounted(() => {
+  if (allBots.getBots.length) renderSelect(allBots.getBots)
+})
 </script>
 
 <template>
