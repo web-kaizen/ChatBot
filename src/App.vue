@@ -1,11 +1,7 @@
 <script setup>
-import TheMain from "./pages/TheMain.vue";
+import TheMain from './pages/TheMain.vue'
 </script>
 
 <template>
-  <section class="layout">
-    <TheMain />
-  </section>
-
+  <TheMain />
 </template>
-
