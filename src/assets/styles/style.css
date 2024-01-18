@@ -70,6 +70,7 @@ ul {
     justify-content: center;
     gap: 10px;
     border: none;
+    transition: all .3s;
 }
 
 .new-chat-btn svg {
@@ -386,6 +387,18 @@ ul {
     top: 12px;
     right: 12px;
     cursor: pointer;
+    border: 0;
+    background-color: transparent;
+    transition: all .2s;
+}
+
+.chat-close svg {
+    width: 33px;
+    height: 33px;
+}
+
+.chat-close:hover {
+    transform: scale(1.1);
 }
 
 .popup {
@@ -448,10 +461,15 @@ ul {
     top: 20px;
     right: 20px;
     cursor: pointer;
+    transition: all .2s;
 }
 
 .popup-close svg {
     color: #fff;
+}
+
+.popup-close:hover {
+    transform: scale(1.2);
 }
 
 .form-login {
