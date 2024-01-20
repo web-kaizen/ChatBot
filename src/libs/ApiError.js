@@ -7,15 +7,14 @@ export default class ApiError {
         'invalid_email_or_password': 'Неверный электронный адрес или пароль',
         'invalid_confirm_password': 'Неверный пароль подтверждения',
         'invalid_passwords': 'Пароли не совпадают',
-        'invalid_token': 'Невалидный токен',
-        'invalid_access_token': 'Invalid access token',
-        'version_not_found': 'Version not found',
-        'application_not_found': 'Application not found',
+        'invalid_access_token': 'Невалидный токен',
+        'version_not_found': 'Версия не найдена',
+        'application_not_found': 'Приложение не найдено',
         'invalid_code': 'Невалидный код',
         'user_not_found': 'Пользователь не найден',
         'email_busy': 'Электронный адрес занят',
-        'email_access_denied': 'Email access denied',
-        'server_error': 'Internal server error',
+        'email_access_denied': 'Доступ к электронной почте запрещён',
+        'server_error': 'Внутренняя ошибка сервера',
     };
 
     static return(code) {

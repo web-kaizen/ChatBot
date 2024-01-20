@@ -3,9 +3,9 @@ import { URL_EMAIL } from '/src/constants/constants.js'
 
 export default class Email {
     check(token, callback) {
-        if (typeof token !== 'string') ApiError.return('invalid_token');
+        if (typeof token !== 'string') ApiError.return('invalid_access_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
-        console.log(URL_EMAIL)
+
         let url = URL_EMAIL + '/check'
 
         fetch(url, {
@@ -17,8 +17,9 @@ export default class Email {
             .then(async function(response) {
                 let status = response.status;
                 if (status === 200) {
+                    let json = await response.json();
                     return {
-                        "status": true
+                        "status": json['result']['status']
                     };
                 } else if (status === 401) {
                     ApiError.return('invalid_access_token');
@@ -37,7 +38,7 @@ export default class Email {
     }
 
     resend(token, callback) {
-        if (typeof token !== 'string') ApiError.return('invalid_token');
+        if (typeof token !== 'string') ApiError.return('invalid_access_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = URL_EMAIL + '/resend'
@@ -71,7 +72,7 @@ export default class Email {
     }
 
     verify(token, email, code, callback) {
-        if (typeof token !== 'string') ApiError.return('invalid_token');
+        if (typeof token !== 'string') ApiError.return('invalid_access_token');
         if (typeof email !== 'string') ApiError.return('invalid_email');
         if (typeof code !== 'number') ApiError.return('invalid_code');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
@@ -93,8 +94,7 @@ export default class Email {
                 let status = response.status;
                 if (status === 204) {
                     return {
-                        "status": true,
-                        "ttl": 120
+                        "status": true
                     };
                 } else if (status === 400) {
                     let json = await response.json();
@@ -127,5 +127,5 @@ const callback = (obj) => {
 let email = new Email()
 let token = 'a42142af1fa222c4201a0a442ffa215667586e060243a6c5e924750bab2dd78c'
 
-// email.check(token, callback)
-email.resend(token, callback)
+email.check(token, callback)
+// email.resend(token, callback)
