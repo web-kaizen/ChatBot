@@ -1,11 +1,12 @@
 import ApiError from './ApiError.js';
+import { URL_EMAIL } from '/src/constants/constants.js'
 
 export default class Email {
     check(token, callback) {
         if (typeof token !== 'string') ApiError.return('invalid_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
-
-        let url = 'http://85.215.65.210:8081/api/v0/users/email-verification/check';
+        console.log(URL_EMAIL)
+        let url = URL_EMAIL + '/check'
 
         fetch(url, {
             method: 'GET',
@@ -39,7 +40,7 @@ export default class Email {
         if (typeof token !== 'string') ApiError.return('invalid_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = 'http://85.215.65.210:8081/api/v0/users/email-verification/resend';
+        let url = URL_EMAIL + '/resend'
 
         fetch(url, {
             method: 'POST',
@@ -75,7 +76,7 @@ export default class Email {
         if (typeof code !== 'number') ApiError.return('invalid_code');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = 'http://85.215.65.210:8081/api/v0/users/email-verification/verify';
+        let url = URL_EMAIL + '/verify'
 
         fetch(url, {
             method: 'POST',
@@ -120,3 +121,11 @@ export default class Email {
             .then(data => callback(data));
     }
 }
+const callback = (obj) => {
+    console.log(obj);
+};
+let email = new Email()
+let token = 'a42142af1fa222c4201a0a442ffa215667586e060243a6c5e924750bab2dd78c'
+
+// email.check(token, callback)
+email.resend(token, callback)
