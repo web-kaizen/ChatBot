@@ -1,12 +1,12 @@
 import ApiError from './ApiError.js';
-import { URL_EMAIL } from '/src/constants/constants.js'
+import { URL_PROXY_NIKITA } from '/src/constants/constants.js'
 
 export default class Email {
     check(token, callback) {
         if (typeof token !== 'string') ApiError.return('invalid_access_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_EMAIL + '/check'
+        let url = URL_PROXY_NIKITA + '/api/v0/users/email-verification/check'
 
         fetch(url, {
             method: 'GET',
@@ -41,7 +41,7 @@ export default class Email {
         if (typeof token !== 'string') ApiError.return('invalid_access_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_EMAIL + '/resend'
+        let url = URL_PROXY_NIKITA + '/api/v0/users/email-verification/resend'
 
         fetch(url, {
             method: 'POST',
@@ -77,7 +77,7 @@ export default class Email {
         if (typeof code !== 'number') ApiError.return('invalid_code');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_EMAIL + '/verify'
+        let url = URL_PROXY_NIKITA + '/api/v0/users/email-verification/verify'
 
         fetch(url, {
             method: 'POST',
