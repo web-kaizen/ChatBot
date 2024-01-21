@@ -42,7 +42,7 @@ export default class Email {
                     return { "status": true, "ttl": 120 };
                 }
                 let json = await response.json();
-                if (json['error']['status'] === 429) {
+                if (json['error']['code'] === 'rate_limit_exceeded') {
                     return { "status": false, "ttl": json['error']['delay'] };
                 } else if ('error' in json) {
                     ApiError.return(json['error']['code'])
