@@ -42,7 +42,7 @@ export default class Email {
                     return { "status": true, "ttl": 120 };
                 }
                 let json = await response.json();
-                if (response.status === 429) {
+                if (json['error']['status'] === 429) {
                     return { "status": false, "ttl": json['error']['delay'] };
                 } else if ('error' in json) {
                     ApiError.return(json['error']['code'])
@@ -82,3 +82,13 @@ export default class Email {
             .then(data => callback(data));
     }
 }
+const callback = (obj) => {
+    console.log(obj);
+};
+
+let email = new Email()
+let token = '4380b2fa47e846605bb248d410dae4b069a808c22a17d9f3acf767deea3ffe18'
+
+// email.check(token, callback)
+email.resend(token, callback)
+// email.verify(token, 'evgcursed@gmail.com', 2, callback)
