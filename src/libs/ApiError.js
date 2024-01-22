@@ -10,6 +10,8 @@ export default class ApiError {
         'user_not_found': 'Пользователь не найден',
         'email_busy': 'Электронный адрес занят',
         'server_error': 'Internal server error',
+        'invalid_offset': 'Невалидный offset',
+        'invalid_limit': 'Невалидный limit'
     };
 
     static return(code) {
