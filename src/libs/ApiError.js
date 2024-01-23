@@ -11,7 +11,9 @@ export default class ApiError {
         'email_busy': 'Электронный адрес занят',
         'server_error': 'Internal server error',
         'invalid_offset': 'Невалидный offset',
-        'invalid_limit': 'Невалидный limit'
+        'invalid_limit': 'Невалидный limit',
+        'invalid_name': 'Невалидный name',
+        'invalid_botId': 'Невалидный botId'
     };
 
     static return(code) {
