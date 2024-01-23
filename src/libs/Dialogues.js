@@ -52,7 +52,30 @@ export default class Dialogues {
             .then(data => callback(data));
     }
 
-    getById() {
+    getById(dialogueId, callback) {
+        if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
+        if (typeof callback !== 'function') ApiError.return('invalid_callback');
+
+        let url = URL_PROXY + 'api/v0/dialogues/' + dialogueId + '/'
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(async function(response) {
+                let json = await response.json();
+                if ('result' in json) {
+                    return json
+                } else if ('error' in json) {
+                    ApiError.return(json['error']['code'])
+                }
+            })
+            .then(data => callback(data));
+    }
+
+    optUpdateById(dialogueId, name, botId, callback) {
 
     }
 }
@@ -65,4 +88,5 @@ let token = '27b71028293f56d0f851cab13264809691dcddd1fd3439e626565f1f40f0df1f'
 let dialogues = new Dialogues()
 // dialogues.get(0, 0, callback) //работает
 // dialogues.make('gpt-4-8k', 1, callback) //invalid name
-dialogues.getById()
+// dialogues.getById(30, callback)
+// dialogues.
