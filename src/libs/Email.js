@@ -6,7 +6,7 @@ export default class Email {
         if (typeof token !== 'string') ApiError.return('invalid_access_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + '/api/v0/users/email-verification/check'
+        let url = URL_PROXY + 'api/v0/users/email-verification/check/'
 
         fetch(url, {
             method: 'GET',
@@ -29,7 +29,7 @@ export default class Email {
         if (typeof token !== 'string') ApiError.return('invalid_access_token');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + '/api/v0/users/email-verification/resend'
+        let url = URL_PROXY + 'api/v0/users/email-verification/resend/'
 
         fetch(url, {
             method: 'POST',
@@ -57,7 +57,7 @@ export default class Email {
         if (typeof code !== 'number') ApiError.return('invalid_code');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + '/api/v0/users/email-verification/verify'
+        let url = URL_PROXY + 'api/v0/users/email-verification/verify/'
 
         fetch(url, {
             method: 'POST',
