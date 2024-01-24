@@ -320,10 +320,6 @@ ul {
     grid-template: 68px auto 54px / 1fr;
 }
 
-.main-chat.hide {
-    /*display: none;*/
-}
-
 .chat-title {
     align-self: start;
     justify-self: center;
@@ -337,6 +333,8 @@ ul {
 }
 
 .chat-form {
+    justify-self: center;
+    width: 890px;
     border-radius: 10px;
     border: 1px solid #E6E6E6;
     padding: 10px 20px;

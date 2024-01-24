@@ -1,5 +1,6 @@
 <script setup>
 import { XMarkIcon } from '@heroicons/vue/24/outline'
+import TheDialogChat from './TheDialogChat.vue'
 import TheDialogInput from './TheDialogInput.vue'
 import { newChat } from '../../store/chat'
 
@@ -16,7 +17,7 @@ const closeChat = () => {
 
 <template>
   <h3 class="chat-title">{{ chatTitle }}</h3>
-  <section class="chat-dialog">Здесь будут выводиться сообщения</section>
+  <TheDialogChat />
   <TheDialogInput />
   <button class="chat-close" @click="closeChat">
     <XMarkIcon />
