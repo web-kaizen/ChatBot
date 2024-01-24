@@ -1,4 +1,14 @@
-<script setup></script>
+<script setup>
+import Message from '@/libs/Message'
+
+const messages = new Message()
+
+try {
+  messages.getList(65)
+} catch (error) {
+  console.log(error)
+}
+</script>
 
 <template>
   <ul class="messages">
