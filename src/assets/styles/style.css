@@ -31,6 +31,7 @@ ul {
     background: #1C40FF;
     color: #FFFFFF;
     transition: all .3s;
+    border: none;
 }
 
 .button:hover {
@@ -69,10 +70,12 @@ ul {
     justify-content: center;
     gap: 10px;
     border: none;
+    transition: all .3s;
 }
 
 .new-chat-btn svg {
-    width: 12px;
+    width: 20px;
+    height: 20px;
 }
 
 .view-sidebar-btn {
@@ -147,6 +150,11 @@ ul {
     color: #FFF;
 }
 
+.user-login-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
 .user-after-login {
     border-radius: 10px;
     border: 1px solid #5F5F5F;
@@ -208,6 +216,12 @@ ul {
     background: transparent;
     height: 14px;
     transition: all .5s;
+    width: 14px;
+    height: 14px;
+}
+
+.user-balance-update svg {
+    color: #1C40FF;
 }
 
 .user-actions {
@@ -307,7 +321,7 @@ ul {
 }
 
 .main-chat.hide {
-    display: none;
+    /*display: none;*/
 }
 
 .chat-title {
@@ -328,6 +342,15 @@ ul {
     padding: 10px 20px;
     display: flex;
     gap: 17px;
+}
+
+.chat-form__img {
+    width: 30px;
+}
+
+
+.chat-form__submit {
+    width: 30px;
 }
 
 .chat-form__input {
@@ -364,6 +387,18 @@ ul {
     top: 12px;
     right: 12px;
     cursor: pointer;
+    border: 0;
+    background-color: transparent;
+    transition: all .2s;
+}
+
+.chat-close svg {
+    width: 33px;
+    height: 33px;
+}
+
+.chat-close:hover {
+    transform: scale(1.1);
 }
 
 .popup {
@@ -376,11 +411,11 @@ ul {
     justify-content: center;
     align-items: center;
     z-index: 999;
-    display: flex;
+    display: none;
 }
 
-.popup.hide {
-    display: none;
+.popup.open {
+    display: flex;
 }
 
 .popup-login {
@@ -418,19 +453,23 @@ ul {
     visibility: visible;
 }
 
-.login-alert-msg.hide {
-    display: none;
-}
-
 .popup-close {
     display: block;
-    width: 15px;
-    height: 15px;
-    fill: #FFF;
+    width: 25px;
+    height: 25px;
     position: absolute;
     top: 20px;
     right: 20px;
     cursor: pointer;
+    transition: all .2s;
+}
+
+.popup-close svg {
+    color: #fff;
+}
+
+.popup-close:hover {
+    transform: scale(1.2);
 }
 
 .form-login {
@@ -456,6 +495,7 @@ ul {
     align-items: center;
     gap: 14px;
     position: relative;
+    width: 100%;
 }
 
 .form-input.hide {
@@ -464,6 +504,12 @@ ul {
 
 .form-input.invalid {
     border-color: #ff0000;
+}
+
+.form-input svg {
+    color: #fff;
+    width: 22px;
+    height: 22px;
 }
 
 .form-input input {
@@ -588,11 +634,6 @@ ul {
     color: #FFF;
 }
 
-.check-data {
-    width: 100%;
-    position: relative;
-}
-
 .check-input {
     width: 100%;
     padding: 10px 0 10px 12px;
@@ -622,8 +663,11 @@ ul {
     color: #FFF;
 }
 
+.check-info {
+    border-bottom: 1px solid transparent;
+}
+
 .check-link {
-    display: none;
     border: none;
     background: transparent;
     border-bottom: 1px solid #FFF;
@@ -632,9 +676,6 @@ ul {
 
 .check-button {
     font-size: 16px;
-    font-weight: 400;
-    border: none;
-    color: #FFF;
     height: 46px;
     width: 100%;
 }
