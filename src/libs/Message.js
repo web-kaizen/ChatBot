@@ -3,10 +3,10 @@ import ApiError from './ApiError.js';
 
 export default class Message {
 
-    getList(dialogueId, offset = 0, limit, callback) {
+    getList(dialogueId, offset = 0, limit = undefined, callback) {
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogue_id');
         if (typeof offset !== 'number') ApiError.return('invalid_offset');
-        if (typeof limit !== 'number') ApiError.return('invalid_limit');
+        if (limit && typeof limit !== 'number') ApiError.return('invalid_limit');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let token = 'a9638f8ba36918524f7cf6091ce07802674834aa3f5d1968a2e4749b9d17c221';

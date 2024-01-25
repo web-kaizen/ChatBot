@@ -1,10 +1,11 @@
 <script setup>
+import DialogMessage from './DialogMessage.vue'
 import Message from '@/libs/Message'
 
 const messages = new Message()
 
 try {
-  messages.getList(65)
+  messages.getList(65, 0, undefined, (data) => console.log(data))
 } catch (error) {
   console.log(error)
 }
@@ -12,38 +13,23 @@ try {
 
 <template>
   <ul class="messages">
-    <li class="message message-user">Привет!</li>
-    <li class="message message-bot">Привет! Как я могу вам помочь!</li>
-    <li class="message message-error">
-      Простите, но я не понимаю, что вы имеете в виду. Можете объяснить подробнее?
-    </li>
+    <DialogMessage text="Привет!" role="user" />
+    <DialogMessage text="Привет! Как я могу вам помочь!" role="bot" />
+    <DialogMessage
+      text="Простите, но я не понимаю, что вы имеете в виду. Можете объяснить подробнее?"
+      role="error"
+    />
   </ul>
 </template>
 
 <style scoped>
 .messages {
-  list-style: none;
   display: flex;
   flex-direction: column;
   gap: 14px;
-}
-
-.message {
-  padding: 20px;
-  border-radius: 14px;
-  border: 1px solid#e6e6e6;
-}
-
-.message-user {
-  background: #fff;
-}
-
-.message-bot {
-  background: #e6e6e6;
-}
-
-.message-error {
-  border: 1px solid #f00;
-  background: #f6e5e6;
+  justify-content: flex-end;
+  padding: 0 10px 20px 10px;
+  overflow-y: auto;
+  height: 100%;
 }
 </style>
