@@ -4,12 +4,29 @@ import TheDialogChat from './TheDialogChat.vue'
 import TheDialogInput from './TheDialogInput.vue'
 import TheDialogError from './TheDialogError.vue'
 import { newChat } from '../../store/chat'
+import { userChats } from '../../store/userChats'
+import Message from '@/libs/Message'
+import { onMounted } from 'vue'
+
+const dialogId = 65
+
+const messages = new Message()
+const activeChat = newChat()
+const userDialogs = userChats()
 
 defineProps({
   chatTitle: String
 })
 
-const activeChat = newChat()
+const onSendMessage = (text) => {
+  try {
+    messages.send(dialogId, text, 1, (data) => {
+      userDialogs.addMessagesInCurrentChat(dialogId, data.result)
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 const handleErrorChat = () => {
   activeChat.toggleError(true)
@@ -23,6 +40,16 @@ const closeChat = () => {
   activeChat.toggleError(false)
   activeChat.changeTextError('')
 }
+
+onMounted(() => {
+  try {
+    messages.getList(dialogId, 0, undefined, (data) => {
+      userDialogs.addUserChat(dialogId, data.result)
+    })
+  } catch (error) {
+    console.log(error)
+  }
+})
 </script>
 
 <template>
@@ -31,7 +58,7 @@ const closeChat = () => {
   <button class="button-error" @click="handleErrorChat">Error</button>
   <TheDialogChat />
   <TheDialogError v-if="activeChat.getIsError" :text="activeChat.getTextError" />
-  <TheDialogInput v-else />
+  <TheDialogInput v-else @send-message="onSendMessage" />
   <button class="chat-close" @click="closeChat">
     <XMarkIcon />
   </button>

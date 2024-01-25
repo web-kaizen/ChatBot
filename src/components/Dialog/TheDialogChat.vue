@@ -1,23 +1,30 @@
 <script setup>
+import { watch, ref } from 'vue'
 import DialogMessage from './DialogMessage.vue'
-import Message from '@/libs/Message'
+import { userChats } from '../../store/userChats'
 
-const messages = new Message()
+const dialogId = 65
 
-try {
-  messages.getList(65, 0, undefined, (data) => console.log(data))
-} catch (error) {
-  console.log(error)
-}
+const messagesCurrentChat = ref([])
+const userDialogs = userChats()
+
+watch(
+  () => userDialogs,
+  () => {
+    const currentChat = userDialogs.getUserChats
+    messagesCurrentChat.value = currentChat.find((chat) => chat.id === dialogId).messages
+  },
+  { deep: true }
+)
 </script>
 
 <template>
   <ul class="messages">
-    <DialogMessage text="Привет!" role="user" />
-    <DialogMessage text="Привет! Как я могу вам помочь!" role="bot" />
     <DialogMessage
-      text="Простите, но я не понимаю, что вы имеете в виду. Можете объяснить подробнее?"
-      role="error"
+      v-for="message in messagesCurrentChat"
+      :key="message.id"
+      :text="message.text"
+      :role="message.author.role"
     />
   </ul>
 </template>
