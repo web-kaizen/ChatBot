@@ -8,7 +8,8 @@ import { userChats } from '../../store/userChats'
 import Message from '@/libs/Message'
 import { onMounted } from 'vue'
 
-const dialogId = 65
+const dialogId = 68
+const botId = 1
 
 const messages = new Message()
 const activeChat = newChat()
@@ -20,7 +21,7 @@ defineProps({
 
 const onSendMessage = (text) => {
   try {
-    messages.send(dialogId, text, 1, (data) => {
+    messages.send(dialogId, text, botId, (data) => {
       userDialogs.addMessagesInCurrentChat(dialogId, data.result)
     })
   } catch (error) {

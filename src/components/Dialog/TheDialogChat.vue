@@ -3,7 +3,7 @@ import { watch, ref } from 'vue'
 import DialogMessage from './DialogMessage.vue'
 import { userChats } from '../../store/userChats'
 
-const dialogId = 65
+const dialogId = 68
 
 const messagesCurrentChat = ref([])
 const userDialogs = userChats()
