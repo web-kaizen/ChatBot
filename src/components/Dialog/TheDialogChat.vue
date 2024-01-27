@@ -1,18 +1,16 @@
 <script setup>
-import { watch, ref } from 'vue'
 import DialogMessage from './DialogMessage.vue'
-import { userChats } from '../../store/userChats'
+import { newChat } from '../../store/chat'
+import { ref, watch } from 'vue'
 
-const dialogId = 68
+const activeChat = newChat()
 
-const messagesCurrentChat = ref([])
-const userDialogs = userChats()
+const messages = ref([])
 
 watch(
-  () => userDialogs,
+  () => activeChat,
   () => {
-    const currentChat = userDialogs.getUserChats
-    messagesCurrentChat.value = currentChat.find((chat) => chat.id === dialogId).messages
+    messages.value = activeChat.getMessages
   },
   { deep: true }
 )
@@ -21,7 +19,7 @@ watch(
 <template>
   <ul class="messages">
     <DialogMessage
-      v-for="message in messagesCurrentChat"
+      v-for="message in messages"
       :key="message.id"
       :text="message.text"
       :role="message.author.role"

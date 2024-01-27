@@ -2,19 +2,20 @@ import { API_URL } from '@/constants/constants.js';
 import ApiError from './ApiError.js';
 
 export default class Message {
+    token = 'c55969c4898f62eedd40b88ead6d6a0f82dd41767fc0b7043e1cf3846e4109b6';
 
-    async getList(dialogueId, offset = 0, limit = undefined, callback) {
+    getList(dialogueId, offset = 0, limit = undefined, callback) {
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogue_id');
         if (typeof offset !== 'number') ApiError.return('invalid_offset');
         if (limit && typeof limit !== 'number') ApiError.return('invalid_limit');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let token = 'a9638f8ba36918524f7cf6091ce07802674834aa3f5d1968a2e4749b9d17c221';
+        let token = this.token;
         let url = `${API_URL}/dialogues/${dialogueId}/messages/`;
 
         if (limit) url += `?offset=${offset}&limit=${limit}`
 
-        await fetch(url, {
+        fetch(url, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -22,11 +23,11 @@ export default class Message {
                 'Accept': 'application/json'
             },
         })
-            .then(res => {
-                if (res.ok) return res.json();
-                throw new Error
+            .then(async (res) => {
+                if (res.status === 204) return null
+                return await res.json()
             })
-            .then(data => callback(data));
+            .then(data => callback(data))
     }
 
     async send(dialogueId, message, botId, callback) {
@@ -35,7 +36,7 @@ export default class Message {
         if (typeof botId !== 'number') ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let token = 'a9638f8ba36918524f7cf6091ce07802674834aa3f5d1968a2e4749b9d17c221';
+        let token = this.token;
         let url = `${API_URL}/dialogues/${dialogueId}/messages/`;
 
         await fetch(url, {
@@ -50,10 +51,7 @@ export default class Message {
                 bot_id: botId
             })
         })
-            .then(res => {
-                if (res.ok) return res.json();
-                throw new Error
-            })
-            .then(data => callback(data));
+            .then(res => res.json())
+            .then(data => callback(data))
     }
 }

@@ -11,7 +11,9 @@ const openChat = () => {
   const title = bot === 'ChatGpt' ? `${model} (${mode})` : bot
 
   newChatOpen.changeTitle(title)
-  newChatOpen.toggleChat()
+  newChatOpen.toggleChat(true)
+  newChatOpen.changeMessages([])
+  // TODO: сделать отправку на бекенд
 }
 </script>
 

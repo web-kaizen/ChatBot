@@ -1,28 +1,24 @@
 <script setup>
 import { PaperAirplaneIcon, PhotoIcon } from '@heroicons/vue/24/outline'
 
-let textMessage = ''
-
 const emit = defineEmits(['send-message'])
-const sendMessage = () => {
+const sendMessage = (event) => {
+  const textMessage = String(event.target.firstChild.value)
+
   if (textMessage.trim()) {
     emit('send-message', textMessage)
   }
+  event.target.reset()
 }
 </script>
 
 <template>
-  <form class="chat-form" @submit.prevent="sendMessage()">
-    <input
-      type="text"
-      class="chat-form__input"
-      placeholder="Напиши..."
-      @change="textMessage = $event.target.value"
-    />
+  <form class="chat-form" @submit.prevent="sendMessage($event)">
+    <input type="text" class="chat-form__input" placeholder="Напиши..." />
     <button type="button" class="chat-form__img">
       <PhotoIcon />
     </button>
-    <button type="button" class="chat-form__submit" @click="sendMessage()">
+    <button type="submit" class="chat-form__submit">
       <PaperAirplaneIcon />
     </button>
   </form>
