@@ -3,7 +3,8 @@ import { URL_PROXY } from '/src/constants/constants.js'
 
 
 export default class Dialogues {
-    getList(offset = undefined, limit = undefined, callback) {
+    getList(token, offset = undefined, limit = undefined, callback) {
+        if (typeof token !== 'string') ApiError.return('invalid_access_token')
         if (offset && typeof offset !== 'number') ApiError.return('invalid_offset');
         if (limit && typeof limit !== 'number') ApiError.return('invalid_limit');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
@@ -30,7 +31,8 @@ export default class Dialogues {
             .then(data => callback(data));
     }
 
-    create(name, botId, callback) {
+    create(token, name, botId, callback) {
+        if (typeof token !== 'string') ApiError.return('invalid_access_token')
         if (typeof name !== 'string') ApiError.return('invalid_name');
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_botId');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
@@ -57,7 +59,8 @@ export default class Dialogues {
             .then(data => callback(data));
     }
 
-    getById(dialogueId, callback) {
+    getById(token, dialogueId, callback) {
+        if (typeof token !== 'string') ApiError.return('invalid_access_token')
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
@@ -83,7 +86,8 @@ export default class Dialogues {
             .then(data => callback(data));
     }
 
-    optUpdateById(dialogueId, name, botId, callback) {
+    optUpdateById(token, dialogueId, name, botId, callback) {
+        if (typeof token !== 'string') ApiError.return('invalid_access_token')
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof name !== 'string') ApiError.return('invalid_name');
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_botId');
@@ -111,7 +115,8 @@ export default class Dialogues {
             .then(data => callback(data));
     }
 
-    updateById(dialogueId, name, botId, callback) {
+    updateById(token, dialogueId, name, botId, callback) {
+        if (typeof token !== 'string') ApiError.return('invalid_access_token')
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof name !== 'string') ApiError.return('invalid_name');
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_botId');
@@ -139,7 +144,8 @@ export default class Dialogues {
             .then(data => callback(data));
     }
 
-    delById(dialogueId, callback) {
+    delById(token, dialogueId, callback) {
+        if (typeof token !== 'string') ApiError.return('invalid_access_token')
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
