@@ -21,7 +21,7 @@ watch(
     <DialogMessage
       v-for="message in messages"
       :key="message.id"
-      :text="message.text"
+      :codeText="message.text"
       :role="message.author.role"
     />
   </ul>

@@ -5,11 +5,12 @@ import TheDialogInput from './TheDialogInput.vue'
 import TheDialogError from './TheDialogError.vue'
 import { newChat } from '../../store/chat'
 import { userChats } from '../../store/userChats'
+import ApiError from '../../libs/ApiError'
 import Message from '@/libs/Message'
 import { onMounted } from 'vue'
 
 // TODO: эти данные будем получать с бекенда
-const dialogId = 77
+const dialogId = 79
 const botId = 1
 
 const messages = new Message()
@@ -28,7 +29,8 @@ const onSendMessage = (text) => {
       const currentChat = userDialogs.getUserChats
       activeChat.changeMessages(currentChat.find((chat) => chat.id === dialogId).messages)
     } else {
-      let { code, message } = data.error
+      let { code } = data.error
+      let { text: message } = JSON.parse(ApiError.return(code))
 
       if (code === 'rate_limit_exceeded') handleErrorChat(message)
       if (code === 'context_limit_exceeded') handleErrorChat(message)
