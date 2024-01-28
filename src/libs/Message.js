@@ -1,8 +1,10 @@
 import { API_URL } from '@/constants/constants.js';
 import ApiError from './ApiError.js';
+import { newChat } from '@/store/chat.js';
 
 export default class Message {
     token = 'c55969c4898f62eedd40b88ead6d6a0f82dd41767fc0b7043e1cf3846e4109b6';
+    activeChat = newChat()
 
     async getList(dialogueId, offset = 0, limit = undefined, callback) {
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogue_id');
@@ -66,5 +68,29 @@ export default class Message {
 
             })
             .then(data => callback(data))
+    }
+
+    handleErrorChat = (text) => {
+        this.activeChat.toggleError(true)
+        this.activeChat.changeTextError(text)
+    }
+
+    handleApiError({ text, code }) {
+        if (code === 'rate_limit_exceeded') this.handleErrorChat(text)
+        if (code === 'context_limit_exceeded') this.handleErrorChat(text)
+        if (code === 'insufficient_quota') this.handleErrorChat(text)
+
+        if (code === 'invalid_offset') alert(text)
+        if (code === 'invalid_limit') alert(text)
+        if (code === 'invalid_text') alert(text)
+        if (code === 'invalid_bot_id') alert(text)
+        if (code === 'invalid_access_token') alert(text)
+        if (code === 'dialogue_access_denied') alert(text)
+        if (code === 'version_not_found') alert(text)
+        if (code === 'application_not_found') alert(text)
+        if (code === 'dialogue_not_found') alert(text)
+        if (code === 'bot_not_found') alert(text)
+        if (code === 'server_error') alert(text)
+        if (code === 'dialogue_access_denied') alert(text)
     }
 }

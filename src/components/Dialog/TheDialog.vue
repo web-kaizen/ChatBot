@@ -20,6 +20,16 @@ defineProps({
   chatTitle: String
 })
 
+const getAllMessages = (id) => {
+  messages.getList(id, 0, undefined, (data) => {
+    if ('result' in data) {
+      userDialogs.addUserChat(id, data)
+    } else if ('error' in data) {
+      messages.handleApiError(data.error)
+    }
+  })
+}
+
 const onSendMessage = (textMess) => {
   messages.send(dialogId, textMess, botId, (data) => {
     if ('result' in data) {
@@ -28,29 +38,9 @@ const onSendMessage = (textMess) => {
       const currentChat = userDialogs.getUserChats
       activeChat.changeMessages(currentChat.find((chat) => chat.id === dialogId).messages)
     } else if ('error' in data) {
-      let { text, code } = data.error
-
-      if (code === 'rate_limit_exceeded') handleErrorChat(text)
-      if (code === 'context_limit_exceeded') handleErrorChat(text)
-      if (code === 'insufficient_quota') handleErrorChat(text)
-
-      if (code === 'invalid_text') alert(text)
-      if (code === 'invalid_bot_id') alert(text)
-      if (code === 'invalid_access_token') alert(text)
-      if (code === 'dialogue_access_denied') alert(text)
-      if (code === 'version_not_found') alert(text)
-      if (code === 'application_not_found') alert(text)
-      if (code === 'dialogue_not_found') alert(text)
-      if (code === 'bot_not_found') alert(text)
-      if (code === 'server_error') alert(text)
-      if (code === 'dialogue_access_denied') alert(text)
+      messages.handleApiError(data.error)
     }
   })
-}
-
-const handleErrorChat = (text) => {
-  activeChat.toggleError(true)
-  activeChat.changeTextError(text)
 }
 
 const closeChat = () => {
@@ -61,7 +51,7 @@ const closeChat = () => {
 }
 
 onMounted(() => {
-  messages.getList(dialogId, 0, undefined, (data) => userDialogs.addUserChat(dialogId, data))
+  getAllMessages(dialogId)
 })
 </script>
 
