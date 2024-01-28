@@ -3,13 +3,12 @@ import { URL_PROXY } from '/src/constants/constants.js'
 
 
 export default class Dialogues {
-    get(offset = undefined, limit = undefined, callback) {
+    getList(offset = undefined, limit = undefined, callback) {
         if (offset && typeof offset !== 'number') ApiError.return('invalid_offset');
         if (limit && typeof limit !== 'number') ApiError.return('invalid_limit');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = URL_PROXY + 'api/v0/dialogues/'
-        // let url = 'http://85.215.65.210:8080/api/v0/dialogues/'
 
         fetch(url, {
             method: 'GET',
@@ -31,7 +30,7 @@ export default class Dialogues {
             .then(data => callback(data));
     }
 
-    make(name, botId, callback) {
+    create(name, botId, callback) {
         if (typeof name !== 'string') ApiError.return('invalid_name');
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_botId');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
