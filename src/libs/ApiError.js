@@ -20,12 +20,16 @@ export default class ApiError {
         'invalid_text': 'Невалидный текст сообщения',
         'invalid_bot_id': 'Невалидный идентификатор бота',
         'bot_not_found': 'Бот не найден',
-        'rate_limit_exceeded': 'Извините, но ваш запрос превышает лимит запросов. Можете создать новый диалог, чтобы продолжить общение по этой теме. Вот ссылка, чтобы начать новый диалог: создать новый чат.',
-        'context_limit_exceeded': 'Извините, но ваш запрос превышает лимит символов. Можете создать новый диалог, чтобы продолжить общение по этой теме. Вот ссылка, чтобы начать новый диалог: создать новый чат.',
+        'rate_limit_exceeded': 'Извините, но Ваш запрос превышает лимит символов. Можете создать новый диалог, чтобы продолжить общение по этой теме.',
+        'context_limit_exceeded': 'Извините, но Вы превысили лимит запросов. Можете создать новый диалог, чтобы продолжить общение по этой теме.',
         'insufficient_quota': 'Превышена квота'
     };
 
     static return(code) {
+        throw new Error(JSON.stringify(this.get(code)));
+    }
+
+    static get(code) {
         let message = this.errorList[code] || null;
 
         if (message === null) {
@@ -33,6 +37,6 @@ export default class ApiError {
             message = 'Unknown error';
         }
 
-        throw new Error(JSON.stringify({ text: message, code: code }));
+        return { text: message, code: code }
     }
 }

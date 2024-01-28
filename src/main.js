@@ -4,8 +4,7 @@ import hljsVuePlugin from "@highlightjs/vue-plugin";
 import App from './App.vue'
 
 import './assets/styles/style.css'
-import 'highlight.js/styles/default.css';
-import 'highlight.js/styles/atom-one-dark.css';
+import 'highlight.js/styles/atom-one-light.css';
 
 const pinia = createPinia()
 const app = createApp(App)

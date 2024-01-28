@@ -4,7 +4,7 @@ import ApiError from './ApiError.js';
 export default class Message {
     token = 'c55969c4898f62eedd40b88ead6d6a0f82dd41767fc0b7043e1cf3846e4109b6';
 
-    getList(dialogueId, offset = 0, limit = undefined, callback) {
+    async getList(dialogueId, offset = 0, limit = undefined, callback) {
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogue_id');
         if (typeof offset !== 'number') ApiError.return('invalid_offset');
         if (limit && typeof limit !== 'number') ApiError.return('invalid_limit');
@@ -15,7 +15,7 @@ export default class Message {
 
         if (limit) url += `?offset=${offset}&limit=${limit}`
 
-        fetch(url, {
+        await fetch(url, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -25,7 +25,12 @@ export default class Message {
         })
             .then(async (res) => {
                 if (res.status === 204) return null
-                return await res.json()
+                let json = await res.json();
+                if ('result' in json) {
+                    return json
+                } else if ('error' in json) {
+                    return { error: ApiError.get(json['error']['code']) }
+                }
             })
             .then(data => callback(data))
     }
@@ -51,7 +56,15 @@ export default class Message {
                 bot_id: botId
             })
         })
-            .then(res => res.json())
+            .then(async (res) => {
+                let json = await res.json();
+                if ('result' in json) {
+                    return json
+                } else if ('error' in json) {
+                    return { error: ApiError.get(json['error']['code']) }
+                }
+
+            })
             .then(data => callback(data))
     }
 }

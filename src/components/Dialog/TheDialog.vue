@@ -1,16 +1,15 @@
 <script setup>
+import { onMounted } from 'vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import TheDialogChat from './TheDialogChat.vue'
 import TheDialogInput from './TheDialogInput.vue'
 import TheDialogError from './TheDialogError.vue'
 import { newChat } from '../../store/chat'
 import { userChats } from '../../store/userChats'
-import ApiError from '../../libs/ApiError'
 import Message from '@/libs/Message'
-import { onMounted } from 'vue'
 
 // TODO: эти данные будем получать с бекенда
-const dialogId = 79
+const dialogId = 80
 const botId = 1
 
 const messages = new Message()
@@ -21,31 +20,30 @@ defineProps({
   chatTitle: String
 })
 
-const onSendMessage = (text) => {
-  messages.send(dialogId, text, botId, (data) => {
+const onSendMessage = (textMess) => {
+  messages.send(dialogId, textMess, botId, (data) => {
     if ('result' in data) {
       userDialogs.addMessagesInCurrentChat(dialogId, data.result)
 
       const currentChat = userDialogs.getUserChats
       activeChat.changeMessages(currentChat.find((chat) => chat.id === dialogId).messages)
-    } else {
-      let { code } = data.error
-      let { text: message } = JSON.parse(ApiError.return(code))
+    } else if ('error' in data) {
+      let { text, code } = data.error
 
-      if (code === 'rate_limit_exceeded') handleErrorChat(message)
-      if (code === 'context_limit_exceeded') handleErrorChat(message)
-      if (code === 'insufficient_quota') handleErrorChat(message)
+      if (code === 'rate_limit_exceeded') handleErrorChat(text)
+      if (code === 'context_limit_exceeded') handleErrorChat(text)
+      if (code === 'insufficient_quota') handleErrorChat(text)
 
-      if (code === 'invalid_text') alert(message)
-      if (code === 'invalid_bot_id') alert(message)
-      if (code === 'invalid_access_token') alert(message)
-      if (code === 'dialogue_access_denied') alert(message)
-      if (code === 'version_not_found') alert(message)
-      if (code === 'application_not_found') alert(message)
-      if (code === 'dialogue_not_found') alert(message)
-      if (code === 'bot_not_found') alert(message)
-      if (code === 'server_error') alert(message)
-      if (code === 'dialogue_access_denied') alert(message)
+      if (code === 'invalid_text') alert(text)
+      if (code === 'invalid_bot_id') alert(text)
+      if (code === 'invalid_access_token') alert(text)
+      if (code === 'dialogue_access_denied') alert(text)
+      if (code === 'version_not_found') alert(text)
+      if (code === 'application_not_found') alert(text)
+      if (code === 'dialogue_not_found') alert(text)
+      if (code === 'bot_not_found') alert(text)
+      if (code === 'server_error') alert(text)
+      if (code === 'dialogue_access_denied') alert(text)
     }
   })
 }

@@ -1,10 +1,9 @@
 <script setup>
+import { ref, watch } from 'vue'
 import DialogMessage from './DialogMessage.vue'
 import { newChat } from '../../store/chat'
-import { ref, watch } from 'vue'
 
 const activeChat = newChat()
-
 const messages = ref([])
 
 watch(
@@ -22,6 +21,7 @@ watch(
       v-for="message in messages"
       :key="message.id"
       :codeText="message.text"
+      :name="message.author.name"
       :role="message.author.role"
     />
   </ul>
@@ -33,8 +33,7 @@ watch(
   flex-direction: column;
   gap: 14px;
   justify-content: flex-end;
-  padding: 0 10px 20px 10px;
-  overflow-y: auto;
+  padding: 20px;
   height: 100%;
 }
 </style>
