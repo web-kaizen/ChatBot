@@ -29,7 +29,7 @@ export default class Dialogues {
 
     create(name, botId, callback) {
         if (typeof name !== 'string') ApiError.return('invalid_name');
-        if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_botId');
+        if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = URL_PROXY + 'api/v0/dialogues/'
@@ -71,7 +71,7 @@ export default class Dialogues {
     optUpdateById(dialogueId, name, botId, callback) {
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof name !== 'string') ApiError.return('invalid_name');
-        if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_botId');
+        if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = URL_PROXY + 'api/v0/dialogues/' + dialogueId + '/'
@@ -96,7 +96,7 @@ export default class Dialogues {
     updateById(dialogueId, name, botId, callback) {
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof name !== 'string') ApiError.return('invalid_name');
-        if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_botId');
+        if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = URL_PROXY + 'api/v0/dialogues/' + dialogueId + '/'
