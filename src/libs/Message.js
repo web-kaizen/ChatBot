@@ -13,7 +13,7 @@ export default class Message {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let token = this.token;
-        let url = `${API_URL}/dialogues/${dialogueId}/messages/`;
+        let url = `${API_URL}api/v0/dialogues/${dialogueId}/messages/`;
 
         if (limit) url += `?offset=${offset}&limit=${limit}`
 
@@ -44,7 +44,7 @@ export default class Message {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let token = this.token;
-        let url = `${API_URL}/dialogues/${dialogueId}/messages/`;
+        let url = `${API_URL}api/v0/dialogues/${dialogueId}/messages/`;
 
         await fetch(url, {
             method: 'POST',
