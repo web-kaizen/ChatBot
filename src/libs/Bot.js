@@ -1,10 +1,13 @@
 import ApiError from './ApiError.js';
+import { URL_PROXY } from '/src/constants/constants.js'
 
 export default class Bot {
     getList(callback = undefined) {
         if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        fetch('http://85.215.65.210/api/v0/bots')
+        let url = URL_PROXY + 'api/v0/bots/'
+
+        fetch(url)
             .then(response => {
                 if (!response.ok) ApiError.return('server_error');
                 return response.json();
