@@ -2,17 +2,13 @@ import ApiError from './ApiError.js';
 import { URL_PROXY } from '/src/constants/constants.js'
 
 export default class Email {
-    check(token, callback) {
-        if (typeof token !== 'string') ApiError.return('invalid_access_token');
+    check(callback) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = URL_PROXY + 'api/v0/users/email-verification/check/'
 
         fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
+            method: 'GET'
         })
             .then(async function(response) {
                 let json = await response.json();
@@ -25,17 +21,13 @@ export default class Email {
             .then(data => callback(data));
     }
 
-    resend(token, callback) {
-        if (typeof token !== 'string') ApiError.return('invalid_access_token');
+    resend(callback) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = URL_PROXY + 'api/v0/users/email-verification/resend/'
 
         fetch(url, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
+            method: 'POST'
         })
             .then(async function(response) {
                 if (response.status === 204) {
@@ -51,8 +43,7 @@ export default class Email {
             .then(data => callback(data));
     }
 
-    verify(token, email, code, callback) {
-        if (typeof token !== 'string') ApiError.return('invalid_access_token');
+    verify(email, code, callback) {
         if (typeof email !== 'string') ApiError.return('invalid_email');
         if (typeof code !== 'number') ApiError.return('invalid_code');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
@@ -62,7 +53,6 @@ export default class Email {
         fetch(url, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
