@@ -1,4 +1,4 @@
-import { API_URL } from '@/constants/constants.js';
+import { URL_PROXY } from '@/constants/constants.js';
 import ApiError from './ApiError.js';
 import { newChat } from '@/store/chat.js';
 
@@ -13,7 +13,7 @@ export default class Message {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let token = this.token;
-        let url = `${API_URL}api/v0/dialogues/${dialogueId}/messages/`;
+        let url = `${URL_PROXY}api/v0/dialogues/${dialogueId}/messages/`;
 
         if (limit) url += `?offset=${offset}&limit=${limit}`
 
@@ -44,7 +44,7 @@ export default class Message {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let token = this.token;
-        let url = `${API_URL}api/v0/dialogues/${dialogueId}/messages/`;
+        let url = `${URL_PROXY}api/v0/dialogues/${dialogueId}/messages/`;
 
         await fetch(url, {
             method: 'POST',
