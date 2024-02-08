@@ -9,7 +9,7 @@ export default class ApiError {
         'invalid_passwords': 'Пароли не совпадают',
         'user_not_found': 'Пользователь не найден',
         'email_busy': 'Электронный адрес занят',
-        'server_error': 'Internal server error',
+        'server_error': 'Внутренняя ошибка сервера',
         'dialogue_not_found': 'Диалог не найден',
         'dialogue_access_denied': 'Доступ к диалогу запрещён',
         'invalid_offset': 'Некорректное значение смещения',
@@ -22,7 +22,10 @@ export default class ApiError {
         'bot_not_found': 'Бот не найден',
         'rate_limit_exceeded': 'Извините, но Ваш запрос превышает лимит символов. Можете создать новый диалог, чтобы продолжить общение по этой теме.',
         'context_limit_exceeded': 'Извините, но Вы превысили лимит запросов. Можете создать новый диалог, чтобы продолжить общение по этой теме.',
-        'insufficient_quota': 'Превышена квота'
+        'insufficient_quota': 'Превышена квота',
+        'bot_error': 'Отсутствуют старые идентификаторы ботов',
+        'bot_version_conflict': 'Идентификаторы ботов одной версии',
+        'invalid_name': 'Невалидное значение имени'
     };
 
     static return(code) {
