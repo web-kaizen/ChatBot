@@ -4,23 +4,45 @@ export const newChat = defineStore('newChat', {
     state: () => {
         return {
             title: '',
-            isActive: false
+            messages: [],
+            isActive: false,
+            textError: '',
+            isError: false
         }
     },
     getters: {
         getTitle() {
             return this.title
         },
+        getMessages() {
+            return this.messages
+        },
         getIsActive() {
             return this.isActive
+        },
+        getTextError() {
+            return this.textError
+        },
+        getIsError() {
+            return this.isError
         }
     },
     actions: {
-        toggleChat() {
-            this.isActive = !this.isActive
+        toggleChat(value) {
+            this.isActive = value
+            this.isError = false
         },
-        changeTitle(title) {
-            this.title = title
+        toggleError(value) {
+            this.isError = value
+        },
+        changeTitle(value) {
+            this.title = value
+        },
+        changeMessages(value) {
+            this.messages = value
+        },
+        changeTextError(value) {
+            this.textError = value
         }
     },
 })

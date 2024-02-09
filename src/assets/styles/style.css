@@ -11,7 +11,7 @@ body {
     font-family: Arial, sans-serif;
     background: #161616;
     min-width: 320px;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 a {
@@ -24,6 +24,10 @@ button {
 
 ul {
     list-style: none;
+}
+
+#app {
+    height: 100%;
 }
 
 .button {
@@ -40,13 +44,14 @@ ul {
 
 .layout {
     display: flex;
-    min-height: 100vh;
     padding: 20px;
     gap: 20px;
+    height: 100%;
 }
 
 .sidebar {
     width: 293px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -264,9 +269,10 @@ ul {
 
 .main {
     width: 100%;
+    height: 100%;
     border-radius: 14px;
     background: #FFF;
-    padding: 20px 100px;
+    padding: 60px 100px 90px 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -317,31 +323,31 @@ ul {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template: 68px auto 54px / 1fr;
-}
-
-.main-chat.hide {
-    /*display: none;*/
+    grid-template-rows: auto 1fr auto;
+    align-items: center;
+    overflow-y: auto;
 }
 
 .chat-title {
-    align-self: start;
-    justify-self: center;
     font-size: 16px;
     font-weight: 400;
     color: #000;
-}
-
-.chat-dialog {
-    overflow: auto;
+    justify-self: center;
+    margin-bottom: 20px;
+    position: fixed;
+    top: 50px;
 }
 
 .chat-form {
+    justify-self: center;
+    width: 890px;
     border-radius: 10px;
     border: 1px solid #E6E6E6;
     padding: 10px 20px;
     display: flex;
     gap: 17px;
+    position: fixed;
+    bottom: 40px;
 }
 
 .chat-form__img {
@@ -678,4 +684,26 @@ ul {
     font-size: 16px;
     height: 46px;
     width: 100%;
+}
+
+/* Оставить данные стили в общем файле */
+.message-language {
+    color: #c5c5d2;
+    background: #202123;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 5px;
+}
+
+.message-code {
+    background: #cecece;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 5px;
+    white-space: pre-wrap;
+    margin-bottom: 15px;
+}
+
+.hljs-code {
+    color: green;
 }

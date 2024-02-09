@@ -9,8 +9,8 @@ export const useBots = defineStore('bots', {
         }
     },
     getters: {
-        getBots(state) {
-            return state.bots
+        getBots() {
+            return this.bots
         }
     },
     actions: {

@@ -13,22 +13,30 @@ export default class ApiError {
         'invalid_code': 'Невалидный код',
         'user_not_found': 'Пользователь не найден',
         'email_busy': 'Электронный адрес занят',
-        'invalid_offset': 'Невалидный offset',
-        'invalid_limit': 'Невалидный limit',
-        'invalid_name': 'Невалидное значение имени',
-        'invalid_bot_id': 'Невалидный идентификатор бота',
-        'invalid_access_token': 'Невалидный токен',
-        'bot_not_found': 'Бот не найден',
-        'bot_version_conflict': 'Идентификаторы ботов одной версии',
-        'dialogue_access_denied': 'Доступ к диалогу запрещён',
+        'server_error': 'Внутренняя ошибка сервера',
         'dialogue_not_found': 'Диалог не найден',
-        'bot_error': 'Отсутствуют старые идентификаторы ботов',
+        'dialogue_access_denied': 'Доступ к диалогу запрещён',
+        'invalid_offset': 'Некорректное значение смещения',
+        'invalid_limit': 'Некорректное значение лимита',
+        'invalid_access_token': 'Неверный токен доступа',
         'version_not_found': 'Версия не найдена',
         'application_not_found': 'Приложение не найдено',
-        'server_error': 'Внутренняя ошибка сервера'
+        'invalid_text': 'Невалидный текст сообщения',
+        'invalid_bot_id': 'Невалидный идентификатор бота',
+        'bot_not_found': 'Бот не найден',
+        'rate_limit_exceeded': 'Извините, но Ваш запрос превышает лимит символов. Можете создать новый диалог, чтобы продолжить общение по этой теме.',
+        'context_limit_exceeded': 'Извините, но Вы превысили лимит запросов. Можете создать новый диалог, чтобы продолжить общение по этой теме.',
+        'insufficient_quota': 'Превышена квота',
+        'bot_error': 'Отсутствуют старые идентификаторы ботов',
+        'bot_version_conflict': 'Идентификаторы ботов одной версии',
+        'invalid_name': 'Невалидное значение имени'
     };
 
     static return(code) {
+        throw new Error(JSON.stringify(this.get(code)));
+    }
+
+    static get(code) {
         let message = this.errorList[code] || null;
 
         if (message === null) {
@@ -36,6 +44,6 @@ export default class ApiError {
             message = 'Unknown error';
         }
 
-        throw new Error(JSON.stringify({ text: message, code: code }));
+        return { text: message, code: code }
     }
 }
