@@ -18,10 +18,11 @@ export const useBots = defineStore('bots', {
         async getBotsFromAPI() {
             try {
                 // В будущем здесь вызвать метод getList из библиотеки Bot.js
+                function callback(result){
+                    this.bots = result
+                }
                 let bot = new Bot()
-                await getData(bot.getList()).then((data) => {
-                    this.bots = data
-                })
+                await bot.getList(callback)
             } catch (error) {
                 console.error(error)
             }
