@@ -46,14 +46,7 @@ export default class Bot {
                 }
             })
             .catch(error => {
-                console.error(error); // Обрабатываем ошибку
+                console.error(error);
             });
     }
 };
-
-let bot = new Bot()
-
-function callback(result) {
-    console.log(result)
-}
-bot.getList(callback)
