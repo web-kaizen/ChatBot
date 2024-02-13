@@ -1,9 +1,12 @@
 import { URL_PROXY } from '@/constants/constants.js';
 import ApiError from './ApiError.js';
+import User from './User.js';
 import { newChat } from '@/store/chat.js';
 
+const user = new User()
+
 export default class Message {
-    token = 'c55969c4898f62eedd40b88ead6d6a0f82dd41767fc0b7043e1cf3846e4109b6';
+    token = user.getAccessToken();
     activeChat = newChat()
 
     async getList(dialogueId, offset = 0, limit = undefined, callback) {

@@ -22,7 +22,6 @@ const changeForms = () => {
   emit('change-form')
 }
 
-let deviceId = 'deviceId'
 let email = ''
 let password = ''
 let confirmPassword = ''
@@ -43,7 +42,6 @@ const validateForm = () => {
   if (!errorEmail.value && !errorPassword.value && !errorConfirmPassword.value) {
     try {
       user.makeReg(
-        deviceId,
         (data) => {
           emit('user-to-modal', { data, mode: 'Reg' })
           changeForms()

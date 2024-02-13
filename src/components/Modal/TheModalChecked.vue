@@ -7,7 +7,7 @@ const props = defineProps(['email'])
 const emit = defineEmits(['toggle-modal'])
 
 let code = ''
-let counterTimer = 19 // Two minutes
+let counterTimer = 59 // Two minutes
 let checkCode
 
 const stopTimer = ref(false)

@@ -21,7 +21,6 @@ const changeForms = () => {
   emit('change-form')
 }
 
-let deviceId = 'deviceId'
 let email = ''
 let password = ''
 let errorAlert = false
@@ -41,12 +40,7 @@ function validateForm() {
 
   if (!errorEmail.value && !errorPassword.value) {
     try {
-      user.makeAuth(
-        deviceId,
-        (data) => emit('user-to-modal', { data, mode: 'Auth' }),
-        email,
-        password
-      )
+      user.makeAuth((data) => emit('user-to-modal', { data, mode: 'Auth' }), email, password)
     } catch (error) {
       let json = JSON.parse(error.message)
 
