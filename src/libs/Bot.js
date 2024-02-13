@@ -13,36 +13,47 @@ export default class Bot {
                 return response.json();
             })
             .then(data => {
-                let botList = [];
-
-                data.result.forEach(bot => {
-                    let existingBot = botList.find(item => item.name === bot.name);
-
-                    if (!existingBot) {
-                        existingBot = {
-                            name: bot.name,
-                            modelList: []
-                        };
-                        botList.push(existingBot);
-                    };
-
-                    let existingModel = existingBot.modelList.find(model => model.name === bot.model_name);
-
-                    if (!existingModel) {
-                        existingModel = {
-                            name: bot.model_name,
-                            modeList: []
-                        };
-                        existingBot.modelList.push(existingModel);
+                const groupedByBot = data.result.reduce((acc, curr) => {
+                    const botName = curr.bot_name;
+                    if (!acc[botName]) {
+                        acc[botName] = [];
                     }
+                    acc[botName].push(curr);
+                    return acc;
+                }, {});
 
-                    existingModel.modeList.push({
-                        name: bot.mode_name,
-                        id: bot.id
-                    });
-                });
+                const botList = Object.keys(groupedByBot).map(botName => ({
+                    name: botName,
+                    modelList: groupedByBot[botName].reduce((acc, curr) => {
+                        const modelName = curr.model_name;
+                        const modeName = curr.mode_name;
+                        const id = curr.id;
+                        const existingModel = acc.find(model => model.name === modelName);
+                        if (existingModel) {
+                            existingModel.modeList.push({ name: modeName, id });
+                        } else {
+                            acc.push({
+                                name: modelName,
+                                modeList: [{ name: modeName, id }]
+                            });
+                        }
+                        return acc;
+                    }, [])
+                }));
 
-                if (callback) callback(botList);
+                if (callback) {
+                    callback(botList);
+                }
             })
+            .catch(error => {
+                console.error(error); // Обрабатываем ошибку
+            });
     }
 };
+
+let bot = new Bot()
+
+function callback(result) {
+    console.log(result)
+}
+bot.getList(callback)
