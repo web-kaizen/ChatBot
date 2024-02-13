@@ -28,7 +28,7 @@ export default class User {
             })
             .then(data => {
                 if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
-                    callback({ email, password });
+                    callback({ email });
                 }
             });
     }
@@ -57,7 +57,7 @@ export default class User {
             .then(data => {
                 if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
                     localStorage.setItem('accessToken', JSON.stringify(data['access_token'] || ''));
-                    callback({ email, password });
+                    callback({ email });
                 }
             });
     }
