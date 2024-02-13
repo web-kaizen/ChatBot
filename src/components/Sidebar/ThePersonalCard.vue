@@ -15,8 +15,7 @@ const logOut = () => {
     user.logout(changeCard)
   } catch (error) {
     let json = JSON.parse(error.message)
-
-    console.error(json.text)
+    alert(json.text)
   }
 }
 </script>

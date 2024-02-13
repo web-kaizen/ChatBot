@@ -1,69 +1,93 @@
 import ApiError from './ApiError.js';
 
+// TODO: заменить потом на проксю Максима
+const URL_PROXY = 'http://85.215.65.210:8081/api/v0/';
+
 export default class User {
-    makeReg(deviceId, callback, email = undefined, password = undefined, confirmPassword = undefined) {
-        if (typeof deviceId !== 'string') ApiError.return('invalid_device_id');
+    makeReg(callback, email = undefined, password = undefined, confirmPassword = undefined) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
+        if (password !== confirmPassword) ApiError.return('invalid_passwords');
 
-        let user = JSON.parse(localStorage.getItem('user')) || {};
-
-        if (email && password && confirmPassword) {
-            if (typeof email !== 'string') ApiError.return('invalid_email');
-            if (email === user.email) ApiError.return('email_busy');
-            if (typeof password !== 'string') ApiError.return('invalid_password');
-            if (typeof confirmPassword !== 'string') ApiError.return('invalid_confirm_password');
-            if (password !== confirmPassword) ApiError.return('invalid_passwords');
-
-            user = { email: email, password: password };
-        }
-
-        user.deviceId = deviceId;
-
-        localStorage.setItem('user', JSON.stringify(user));
-
-        callback(user);
+        fetch(`${URL_PROXY}users/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'email': email,
+                'password': password
+            })
+        })
+            .then(async function (response) {
+                let json = await response.json();
+                if ('result' in json) {
+                    return json['result']
+                } else if ('error' in json) {
+                    ApiError.return(json['error']['code'])
+                }
+            })
+            .then(data => {
+                if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
+                    callback({ email });
+                }
+            });
     }
 
-    makeAuth(deviceId, callback, email = undefined, password = undefined) {
-        if (typeof deviceId !== 'string') ApiError.return('invalid_device_id');
+    makeAuth(callback, email = undefined, password = undefined) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let user = JSON.parse(localStorage.getItem('user')) || {};
-        if (Object.keys(user).length === 0) ApiError.return('user_not_found');
-
-        if (email && password) {
-            if (typeof email !== 'string') ApiError.return('invalid_email');
-            if (typeof password !== 'string') ApiError.return('invalid_password');
-            if (user.email !== email || user.password !== password) ApiError.return('invalid_email_or_password');
-
-            let alphabet = 'qwertyuiopasdfghjklzxcvbnm';
-            let token = '';
-
-            for (let i = 0; i < 30; i++) {
-                token += alphabet[Math.round(Math.random() * (alphabet.length - 1))];
-            }
-
-            user.authToken = token;
-        }
-
-        localStorage.setItem('user', JSON.stringify(user));
-
-        callback(user);
+        fetch(`${URL_PROXY}users/login/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'email': email,
+                'password': password
+            })
+        })
+            .then(async function (response) {
+                let json = await response.json();
+                if ('result' in json) {
+                    return json['result']
+                } else if ('error' in json) {
+                    ApiError.return(json['error']['code'])
+                }
+            })
+            .then(data => {
+                if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
+                    localStorage.setItem('accessToken', JSON.stringify(data['access_token'] || ''));
+                    callback({ email });
+                }
+            });
     }
 
     logout(callback) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let user = JSON.parse(localStorage.getItem('user')) || {};
-        let status = false;
+        const token = this.getAccessToken();
 
-        if ('authToken' in user) {
-            delete user['authToken'];
-            status = true;
-        }
+        fetch(`${URL_PROXY}users/logout/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(async function (response) {
+                if (response.status === 204) {
+                    localStorage.removeItem('accessToken');
+                    callback(true);
+                    return
+                }
+                let json = await response.json();
+                if ('error' in json) {
+                    ApiError.return(json['error']['code'])
+                }
+            })
+    }
 
-        localStorage.setItem('user', JSON.stringify(user));
-
-        callback(status);
+    getAccessToken() {
+        return localStorage.getItem('accessToken') ? JSON.parse(localStorage.getItem('accessToken')) : ''
     }
 }
