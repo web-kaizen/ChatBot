@@ -2,12 +2,12 @@ import ApiError from './ApiError.js';
 import { URL_PROXY } from '/src/constants/constants.js'
 
 export default class Bot {
-    getList(callback = undefined) {
+    async getList(callback = undefined) {
         if (callback && typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = URL_PROXY + 'api/v0/bots/'
 
-        fetch(url)
+        await fetch(url)
             .then(response => {
                 if (!response.ok) ApiError.return('server_error');
                 return response.json();

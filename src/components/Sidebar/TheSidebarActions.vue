@@ -8,7 +8,7 @@ import { newChat } from '../../store/chat'
 const newChatOpen = newChat()
 const openChat = () => {
   const { bot, model, mode } = JSON.parse(localStorage.getItem('bots'))
-  const title = bot === 'ChatGpt' ? `${model} (${mode})` : bot
+  const title = bot === 'ChatGPT' ? `${model} (${mode})` : bot
 
   newChatOpen.changeTitle(title)
   newChatOpen.toggleChat(true)
