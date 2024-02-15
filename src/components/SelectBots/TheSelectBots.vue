@@ -58,7 +58,7 @@ watch(
   () => {
     const sectorObj = localStorage.getItem('bots') ? JSON.parse(localStorage.getItem('bots')) : {}
 
-    if (selectedBot.value === 'ChatGpt') {
+    if (selectedBot.value === 'ChatGPT') {
       selectedModel.value = sectorObj.model || listModels.value[0].name
       listModes.value = listModels.value.find(
         (model) => model.name === selectedModel.value
@@ -86,13 +86,13 @@ onMounted(() => {
       @change-select="onChangeSelectBots"
     />
     <SelectBotsItem
-      v-if="selectedBot === 'ChatGpt'"
+      v-if="selectedBot === 'ChatGPT'"
       :items="listModels"
       :isSelected="selectedModel"
       @change-select="onChangeSelectModel"
     />
     <SelectBotsItem
-      v-if="selectedBot === 'ChatGpt'"
+      v-if="selectedBot === 'ChatGPT'"
       :items="listModes"
       :isSelected="selectedMode"
       @change-select="onChangeSelectMode"

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { URL } from '../constants/constants'
-import { getData } from '@/functions/functions'
+import Bot from '../libs/Bot.js'
 
 export const useBots = defineStore('bots', {
     state: () => {
@@ -16,10 +15,8 @@ export const useBots = defineStore('bots', {
     actions: {
         async getBotsFromAPI() {
             try {
-                // В будущем здесь вызвать метод getList из библиотеки Bot.js
-                await getData(URL).then((data) => {
-                    this.bots = data
-                })
+                let bot = new Bot()
+                await bot.getList((data) => this.bots = data)
             } catch (error) {
                 console.error(error)
             }
