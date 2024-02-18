@@ -1,30 +1,16 @@
 import ApiError from './ApiError.js';
-import { URL_PROXY } from '/src/constants/constants.js'
-
+import Request from './Request.js';
 
 export default class Dialogues {
-    getList(offset = undefined, limit = undefined, callback) {
+    getList(offset = 0, limit = undefined, callback) {
         if (offset && typeof offset !== 'number') ApiError.return('invalid_offset');
         if (limit && typeof limit !== 'number') ApiError.return('invalid_limit');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + 'api/v0/dialogues/'
+        let url = 'api/v0/dialogues/'
+        if (limit) url += `?offset=${offset}&limit=${limit}`
 
-        fetch(url, {
-            method: 'GET'
-        })
-            .then(async function(response) {
-                if (response.status === 204) {
-                    return null
-                }
-                let json = await response.json();
-                if ('result' in json) {
-                    return json['result']
-                } else if ('error' in json) {
-                    ApiError.return(json['error']['code'])
-                }
-            })
-            .then(data => callback(data));
+        Request.send(url, 'GET', (data) => callback(data));
     }
 
     create(name, botId, callback) {
@@ -32,40 +18,18 @@ export default class Dialogues {
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + 'api/v0/dialogues/'
+        let url = 'api/v0/dialogues/'
 
-        fetch(url, {
-            method: 'POST'
-        })
-            .then(async function(response) {
-                let json = await response.json();
-                if ('result' in json) {
-                    return json['result']
-                } else if ('error' in json) {
-                    ApiError.return(json['error']['code'])
-                }
-            })
-            .then(data => callback(data));
+        Request.send(url, 'POST', (data) => callback(data), { name: name, bot_id: botId });
     }
 
     getById(dialogueId, callback) {
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + 'api/v0/dialogues/' + dialogueId + '/'
+        let url = `api/v0/dialogues/${dialogueId}/`
 
-        fetch(url, {
-            method: 'GET'
-        })
-            .then(async function(response) {
-                let json = await response.json();
-                if ('result' in json) {
-                    return json['result']
-                } else if ('error' in json) {
-                    ApiError.return(json['error']['code'])
-                }
-            })
-            .then(data => callback(data));
+        Request.send(url, 'GET', (data) => callback(data));
     }
 
     optUpdateById(dialogueId, name, botId, callback) {
@@ -74,23 +38,9 @@ export default class Dialogues {
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + 'api/v0/dialogues/' + dialogueId + '/'
+        let url = `api/v0/dialogues/${dialogueId}/`
 
-        fetch(url, {
-            method: 'PATCH'
-        })
-            .then(async function(response) {
-                if (response.status === 204) {
-                    return null
-                }
-                let json = await response.json();
-                if ('result' in json) {
-                    return json['result']
-                } else if ('error' in json) {
-                    ApiError.return(json['error']['code'])
-                }
-            })
-            .then(data => callback(data));
+        Request.send(url, 'PATCH', (data) => callback(data), { name: name, bot_id: botId });
     }
 
     updateById(dialogueId, name, botId, callback) {
@@ -99,45 +49,17 @@ export default class Dialogues {
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + 'api/v0/dialogues/' + dialogueId + '/'
+        let url = `api/v0/dialogues/${dialogueId}/`
 
-        fetch(url, {
-            method: 'PUT'
-        })
-            .then(async function(response) {
-                if (response.status === 204) {
-                    return null
-                }
-                let json = await response.json();
-                if ('result' in json) {
-                    return json['result']
-                } else if ('error' in json) {
-                    ApiError.return(json['error']['code'])
-                }
-            })
-            .then(data => callback(data));
+        Request.send(url, 'PUT', (data) => callback(data), { name: name, bot_id: botId });
     }
 
     delById(dialogueId, callback) {
         if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        let url = URL_PROXY + 'api/v0/dialogues/' + dialogueId + '/'
+        let url = `api/v0/dialogues/${dialogueId}/`
 
-        fetch(url, {
-            method: 'DELETE'
-        })
-            .then(async function(response) {
-                if (response.status === 204) {
-                    return null
-                }
-                let json = await response.json();
-                if ('result' in json) {
-                    return json['result']
-                } else if ('error' in json) {
-                    ApiError.return(json['error']['code'])
-                }
-            })
-            .then(data => callback(data));
+        Request.send(url, 'DELETE', (data) => callback(data));
     }
 }

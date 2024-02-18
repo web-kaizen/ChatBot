@@ -13,10 +13,10 @@ export const useBots = defineStore('bots', {
         }
     },
     actions: {
-        async getBotsFromAPI() {
+        getBotsFromAPI() {
             try {
                 let bot = new Bot()
-                await bot.getList((data) => this.bots = data)
+                bot.getList((data) => this.bots = data)
             } catch (error) {
                 console.error(error)
             }
