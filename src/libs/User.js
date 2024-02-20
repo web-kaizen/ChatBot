@@ -1,73 +1,35 @@
 import ApiError from './ApiError.js';
-
-// TODO: заменить потом на проксю Максима
-const URL_PROXY = 'http://85.215.65.210:8081/api/v0/';
+import Request from './Request.js';
 
 export default class User {
     makeReg(callback, email = undefined, password = undefined, confirmPassword = undefined) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
         if (password !== confirmPassword) ApiError.return('invalid_passwords');
 
-        fetch(`${URL_PROXY}users/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'email': email,
-                'password': password
-            })
-        })
-            .then(async function (response) {
-                let json = await response.json();
-                if ('result' in json) {
-                    return json['result']
-                } else if ('error' in json) {
-                    ApiError.return(json['error']['code'])
-                }
-            })
-            .then(data => {
-                if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
-                    callback({ email });
-                }
-            });
+        Request.send('users/', 'POST', (data) => {
+            if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
+                callback({ email });
+            }
+        }, { email, password });
     }
 
     makeAuth(callback, email = undefined, password = undefined) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        fetch(`${URL_PROXY}users/login/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'email': email,
-                'password': password
-            })
-        })
-            .then(async function (response) {
-                let json = await response.json();
-                if ('result' in json) {
-                    return json['result']
-                } else if ('error' in json) {
-                    ApiError.return(json['error']['code'])
-                }
-            })
-            .then(data => {
-                if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
-                    localStorage.setItem('accessToken', JSON.stringify(data['access_token'] || ''));
-                    callback({ email });
-                }
-            });
+        Request.send('users/login/', 'POST', (data) => {
+            if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
+                callback({ email });
+            }
+        }, { email, password });
     }
 
     logout(callback) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         const token = this.getAccessToken();
+        const url = Request.getProxyURL();
 
-        fetch(`${URL_PROXY}users/logout/`, {
+        fetch(`${url}users/logout/`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

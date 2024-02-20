@@ -9,7 +9,7 @@ import { userChats } from '../../store/userChats'
 import Message from '@/libs/Message'
 
 // TODO: эти данные будем получать с бекенда
-const dialogId = 80
+const dialogId = 356
 const botId = 1
 
 const messages = new Message()
