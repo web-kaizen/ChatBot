@@ -6,7 +6,7 @@ export default class User {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
         if (password !== confirmPassword) ApiError.return('invalid_passwords');
 
-        Request.send('users/', 'POST', (data) => {
+        Request.send('api/v0/users/', 'POST', (data) => {
             if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
                 callback({ email });
             }
@@ -16,7 +16,7 @@ export default class User {
     makeAuth(callback, email = undefined, password = undefined) {
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
-        Request.send('users/login/', 'POST', (data) => {
+        Request.send('api/v0/users/login/', 'POST', (data) => {
             if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
                 callback({ email });
             }
@@ -29,7 +29,7 @@ export default class User {
         const token = this.getAccessToken();
         const url = Request.getProxyURL();
 
-        fetch(`${url}users/logout/`, {
+        fetch(`${url}api/v0/users/logout/`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
