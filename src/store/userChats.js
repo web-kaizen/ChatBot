@@ -3,12 +3,22 @@ import { defineStore } from 'pinia'
 export const userChats = defineStore('userChats', {
     state: () => {
         return {
-            chats: []
+            chats: [],
+            isError: false,
+            textError: ''
         }
     },
     getters: {
         getUserChats() {
             return this.chats
+        },
+
+        getTextError() {
+            return this.textError
+        },
+
+        getIsError() {
+            return this.isError
         }
     },
     actions: {
@@ -48,6 +58,13 @@ export const userChats = defineStore('userChats', {
                 if (chat.id === chatId) messages.forEach(message => chat.messages.push(message))
                 return chat
             })
+        },
+
+        toggleError(value) {
+            this.isError = value
+        },
+        changeTextError(text) {
+            this.textError = text
         }
     }
 })

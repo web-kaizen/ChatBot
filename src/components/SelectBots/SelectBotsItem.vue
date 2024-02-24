@@ -1,7 +1,8 @@
 <script setup>
 const props = defineProps({
+  text: String,
   items: Array,
-  isSelected: String,
+  selected: String,
   onChangeSelect: Function
 })
 
@@ -11,7 +12,8 @@ const onOptionChange = (event) => {
 </script>
 
 <template>
-  <select :value="isSelected" @change="onOptionChange">
+  <select :value="selected" @change="onOptionChange">
+    <option value="" disabled>Выберите {{ text }}</option>
     <option v-for="item in items" :key="item.name" :value="item.name">{{ item.name }}</option>
   </select>
 </template>
