@@ -6,16 +6,18 @@ import { ArrowRightEndOnRectangleIcon, LockClosedIcon } from '@heroicons/vue/24/
 import User from '../../libs/User'
 import { ref } from 'vue'
 import { validateEmail } from '../../functions/functions'
+import { useUserStore } from '@/store/user'
 
 const user = new User()
-
+const userStore = useUserStore()
 const errorEmail = ref(null)
 const errorPassword = ref(null)
 const errorConfirmPassword = ref(null)
 
-const emit = defineEmits(['change-form', 'user-to-modal'])
+const emit = defineEmits(['change-form'])
 const changeForms = () => {
   document.getElementById('regForm').reset()
+
   errorEmail.value = null
   errorPassword.value = null
   errorConfirmPassword.value = null
@@ -42,8 +44,8 @@ const validateForm = () => {
   if (!errorEmail.value && !errorPassword.value && !errorConfirmPassword.value) {
     try {
       user.makeReg(
-        (data) => {
-          emit('user-to-modal', { data, mode: 'Reg' })
+        ({ email }) => {
+          userStore.setEmail(email)
           changeForms()
         },
         email,

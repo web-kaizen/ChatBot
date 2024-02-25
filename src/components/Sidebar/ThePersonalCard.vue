@@ -1,11 +1,12 @@
 <script setup>
-import { defineProps } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { ArrowPathIcon } from '@heroicons/vue/24/outline'
 import User from '../../libs/User'
+import { useUserStore } from '@/store/user'
 
 const user = new User()
-
-const { email } = defineProps(['email'])
+const userStore = useUserStore()
+const userEmail = ref('')
 
 const emit = defineEmits(['toggle-login-card'])
 const changeCard = () => emit('toggle-login-card')
@@ -18,14 +19,26 @@ const logOut = () => {
     alert(json.text)
   }
 }
+
+watch(
+  () => userStore,
+  () => {
+    userEmail.value = userStore.getEmail
+  },
+  { deep: true }
+)
+
+onMounted(() => {
+  userEmail.value = userStore.getEmail
+})
 </script>
 
 <template>
   <section class="user-after-login">
     <section class="user">
-      <div class="user-logo">{{ email.charAt(0).toUpperCase() }}</div>
+      <div class="user-logo">{{ userEmail && userEmail.charAt(0).toUpperCase() }}</div>
       <div class="user-info">
-        <div class="user-name">{{ email }}</div>
+        <div class="user-name">{{ userEmail && userEmail }}</div>
         <div class="user-balance">
           <p>Баланс: <span id="balance">100р</span></p>
           <button class="user-balance-update">

@@ -1,13 +1,15 @@
 <script setup>
-import { defineProps, defineEmits, ref, watch } from 'vue'
+import { defineEmits, ref, watch } from 'vue'
 import BaseButton from '../Base/BaseButton.vue'
 import BaseInput from '../Base/BaseInput.vue'
+import { useUserStore } from '@/store/user'
 
-const props = defineProps(['email'])
 const emit = defineEmits(['toggle-modal'])
+const userStore = useUserStore()
+const userEmail = ref('')
 
 let code = ''
-let counterTimer = 59 // Two minutes
+let counterTimer = 119 // Two minutes
 let checkCode
 
 const stopTimer = ref(false)
@@ -55,32 +57,38 @@ const sendCheckCode = (email) => {
 }
 
 const getCheckCode = (email) => {
+  if (!email) return
+
   const code = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
 
   stopTimer.value = false
 
-  sendCheckCode(email)
-  startTimer(counterTimer)
+  if (!userStore.getIsAuth) {
+    sendCheckCode(email)
+    startTimer(counterTimer)
+  }
 
   return code
 }
 
 const getCheckCodeRepeat = () => {
-  checkCode = getCheckCode(props.email)
+  checkCode = getCheckCode(userEmail)
 }
 
 watch(
-  () => props.email,
+  () => userStore,
   () => {
-    checkCode = getCheckCode(props.email)
-  }
+    userEmail.value = userStore.getEmail
+    checkCode = getCheckCode(userEmail.value)
+  },
+  { deep: true }
 )
 </script>
 
 <template>
   <section class="popup-registration-check">
     <section class="check-title">
-      <h3 class="check-title-text">Отправили код на {{ props.email }}</h3>
+      <h3 class="check-title-text">Отправили код на {{ userEmail }}</h3>
     </section>
     <section class="check-content">
       <p class="check-description">

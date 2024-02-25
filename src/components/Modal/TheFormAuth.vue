@@ -6,13 +6,14 @@ import { ArrowRightEndOnRectangleIcon, LockClosedIcon } from '@heroicons/vue/24/
 import User from '../../libs/User'
 import { ref } from 'vue'
 import { validateEmail } from '../../functions/functions'
+import { useUserStore } from '@/store/user'
 
 const user = new User()
-
+const userStore = useUserStore()
 const errorEmail = ref(null)
 const errorPassword = ref(null)
 
-const emit = defineEmits(['change-form', 'user-to-modal'])
+const emit = defineEmits(['change-form'])
 const changeForms = () => {
   document.getElementById('authForm').reset()
   errorAlert = false
@@ -40,7 +41,14 @@ function validateForm() {
 
   if (!errorEmail.value && !errorPassword.value) {
     try {
-      user.makeAuth((data) => emit('user-to-modal', { data, mode: 'Auth' }), email, password)
+      user.makeAuth(
+        ({ email }) => {
+          userStore.setEmail(email)
+          userStore.setIsAuth(true)
+        },
+        email,
+        password
+      )
     } catch (error) {
       let json = JSON.parse(error.message)
 

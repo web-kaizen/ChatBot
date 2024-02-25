@@ -18,7 +18,8 @@ export default class User {
 
         Request.send('api/v0/users/login/', 'POST', (data) => {
             if (Object.prototype.hasOwnProperty.call(data, 'user_id')) {
-                callback({ email });
+                const user_id = data['user_id'];
+                callback({ email, user_id });
             }
         }, { email, password });
     }

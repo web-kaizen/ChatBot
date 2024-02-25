@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import TheModalAuthForm from './TheModalAuthForm.vue'
 import TheModalChecked from './TheModalChecked.vue'
+import { useUserStore } from '@/store/user'
 
 const props = defineProps({
   isOpen: {
@@ -9,44 +10,30 @@ const props = defineProps({
   }
 })
 
-const receivedUser = ref('')
+const userStore = useUserStore()
 const isRegistSuccess = ref(false)
 
-const emit = defineEmits(['toggle-modal', 'send-email'])
-const saveEmail = (email) => emit('send-email', email)
+const emit = defineEmits(['toggle-modal'])
 const closeModal = () => emit('toggle-modal')
 
-const receiveUserFromForm = ({ data, mode }) => {
-  document.getElementById('regForm').reset()
-  document.getElementById('authForm').reset()
-
-  if (mode === 'Auth') {
-    if (data.email) {
-      saveEmail(data.email)
-      closeModal()
-    }
-  } else if (mode === 'Reg') {
-    if (data.email) {
-      receivedUser.value = data.email
+watch(
+  () => userStore,
+  () => {
+    if (userStore.getEmail && !userStore.getIsAuth) {
       isRegistSuccess.value = true
+    } else if (userStore.getEmail && userStore.getIsAuth) {
+      closeModal()
     } else {
       isRegistSuccess.value = false
     }
-  }
-}
+  },
+  { deep: true }
+)
 </script>
 
 <template>
   <section class="popup" :class="{ open: props.isOpen }">
-    <TheModalAuthForm
-      v-show="!isRegistSuccess"
-      @toggle-modal="closeModal()"
-      @user-from-form="receiveUserFromForm"
-    />
-    <TheModalChecked
-      v-show="isRegistSuccess"
-      @toggle-modal="isRegistSuccess = !isRegistSuccess"
-      :email="receivedUser"
-    />
+    <TheModalAuthForm v-show="!isRegistSuccess" @toggle-modal="closeModal()" />
+    <TheModalChecked v-show="isRegistSuccess" @toggle-modal="isRegistSuccess = !isRegistSuccess" />
   </section>
 </template>
