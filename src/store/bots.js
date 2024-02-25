@@ -5,7 +5,11 @@ export const useBots = defineStore('bots', {
     state: () => {
         return {
             bots: [],
-            selectedBots: {}
+            selectedBots: {
+                bot: '',
+                model: '',
+                mode: ''
+            }
         }
     },
     getters: {

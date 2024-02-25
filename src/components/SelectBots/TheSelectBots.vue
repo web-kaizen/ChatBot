@@ -12,20 +12,30 @@ const selectedBot = ref(bot)
 const selectedModel = ref(model)
 const selectedMode = ref(mode)
 
-const renderSelect = (bots) => {
+const renderSelect = () => {
+  const bots = allBots.getBots
+  if (!bots) return
+
   listBots.value = bots
+  if (selectedBot.value)
+    listModels.value = bots.find((bot) => bot.name === selectedBot.value).modelList
+  if (selectedModel.value)
+    listModes.value = listModels.value.find((model) => model.name === selectedModel.value).modeList
 }
 
 const onChangeSelectBots = (value) => {
   selectedBot.value = value
   allBots.setSelectedBots('bot', value)
   listModels.value = listBots.value.find((bot) => bot.name === selectedBot.value).modelList
+  selectedModel.value = ''
+  selectedMode.value = ''
 }
 
 const onChangeSelectModel = (value) => {
   selectedModel.value = value
   allBots.setSelectedBots('model', value)
   listModes.value = listModels.value.find((model) => model.name === selectedModel.value).modeList
+  selectedMode.value = ''
 }
 
 const onChangeSelectMode = (value) => {
@@ -33,10 +43,12 @@ const onChangeSelectMode = (value) => {
   allBots.setSelectedBots('mode', value)
 }
 
+renderSelect()
+
 watch(
   () => allBots,
   () => {
-    renderSelect(allBots.getBots)
+    renderSelect()
   },
   { deep: true }
 )

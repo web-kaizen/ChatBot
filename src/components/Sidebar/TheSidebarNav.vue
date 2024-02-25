@@ -1,28 +1,39 @@
 <script setup>
+import { ref, watch } from 'vue'
 import SidebarNavItem from './SidebarNavItem.vue'
+import { userDialoguesStore } from '@/store/userDialogues'
 
-defineProps({
-  title: String
-})
+const userDialogues = userDialoguesStore()
+const dialoguesList = ref([])
+
+const selectedDialogue = (id) => {
+  console.log(id)
+}
+
+watch(
+  () => userDialogues,
+  () => {
+    const dialogues = userDialogues.getDialogues
+    console.log(dialogues)
+    if (dialogues) dialoguesList.value = dialogues
+  },
+  { deep: true }
+)
 </script>
 
 <template>
-  <p class="sidebar-title">{{ title }}</p>
-  <nav class="sidebar-navigation">
-    <SidebarNavItem title="Диалог 1" />
-    <SidebarNavItem title="Диалог 2" />
-    <SidebarNavItem title="Диалог 3" />
-    <SidebarNavItem title="Диалог 4" />
-    <SidebarNavItem title="Диалог 5" />
+  <nav v-if="dialoguesList.length" class="sidebar-navigation">
+    <SidebarNavItem
+      v-for="dialogue in dialoguesList"
+      :id="dialogue.id"
+      :title="dialogue.name"
+      :key="dialogue.id"
+      @onselect="selectedDialogue"
+    />
   </nav>
 </template>
 
 <style scoped>
-.sidebar-title {
-  padding-left: 10px;
-  color: #888;
-  font-size: 14px;
-}
 .sidebar-navigation {
   width: 100%;
   display: flex;

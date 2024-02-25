@@ -10,7 +10,10 @@ export default class Dialogues {
         let url = 'api/v0/dialogues/'
         if (limit) url += `?offset=${offset}&limit=${limit}`
 
-        Request.send(url, 'GET', (data) => callback(data));
+        Request.send(url, 'GET', (data) => {
+            console.log(data);
+            callback(data)
+        });
     }
 
     create(name, botId, callback) {
@@ -24,7 +27,7 @@ export default class Dialogues {
     }
 
     getById(dialogueId, callback) {
-        if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
+        // if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = `api/v0/dialogues/${dialogueId}/`
@@ -33,7 +36,7 @@ export default class Dialogues {
     }
 
     optUpdateById(dialogueId, name, botId, callback) {
-        if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
+        // if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof name !== 'string') ApiError.return('invalid_name');
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
@@ -44,7 +47,7 @@ export default class Dialogues {
     }
 
     updateById(dialogueId, name, botId, callback) {
-        if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
+        // if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof name !== 'string') ApiError.return('invalid_name');
         if (!(typeof botId === 'number' || Array.isArray(botId))) ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
@@ -55,11 +58,11 @@ export default class Dialogues {
     }
 
     delById(dialogueId, callback) {
-        if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
+        // if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogueId');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
 
         let url = `api/v0/dialogues/${dialogueId}/`
 
-        Request.send(url, 'DELETE', (data) => callback(data));
+        Request.send(url, 'DELETE', () => callback());
     }
 }

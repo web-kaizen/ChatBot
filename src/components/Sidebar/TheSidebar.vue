@@ -12,8 +12,7 @@ const openModal = () => emit('toggle-modal')
   <aside class="sidebar">
     <TheSidebarActions />
     <div class="sidebar__nav-wrapper">
-      <TheSidebarNav title="Сегодня" />
-      <TheSidebarNav title="Вчера" />
+      <TheSidebarNav />
     </div>
     <TheSidebarUser @toggle-modal="openModal" />
   </aside>

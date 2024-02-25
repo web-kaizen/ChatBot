@@ -4,6 +4,7 @@ export const userChats = defineStore('userChats', {
     state: () => {
         return {
             chats: [],
+            currentChatId: null,
             isError: false,
             textError: ''
         }
@@ -11,6 +12,10 @@ export const userChats = defineStore('userChats', {
     getters: {
         getUserChats() {
             return this.chats
+        },
+
+        getCurrentChatId() {
+            return this.currentChatId
         },
 
         getTextError() {
@@ -58,6 +63,10 @@ export const userChats = defineStore('userChats', {
                 if (chat.id === chatId) messages.forEach(message => chat.messages.push(message))
                 return chat
             })
+        },
+
+        changeCurrentChatId(id) {
+            this.currentChatId = id
         },
 
         toggleError(value) {

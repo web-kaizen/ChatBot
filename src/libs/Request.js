@@ -42,8 +42,12 @@ export default class Request {
             body: body
         })
             .then(async (response) => {
-                let json = await response.json();
+                if (response.status === 204) {
+                    typeof successCallbabk === 'function' && successCallbabk(null)
+                    return
+                }
 
+                const json = await response.json();
                 if (json['result']) {
                     if (json['result']['access_token']) {
                         this.saveAccessToken(json['result']['access_token'])
