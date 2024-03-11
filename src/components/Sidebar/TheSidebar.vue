@@ -1,10 +1,9 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { defineEmits } from 'vue'
 import TheSidebarActions from './TheSidebarActions.vue'
 import TheSidebarNav from './TheSidebarNav.vue'
 import TheSidebarUser from './TheSidebarUser.vue'
 
-const { user } = defineProps(['user'])
 const emit = defineEmits(['toggle-modal', 'update-props'])
 const openModal = () => emit('toggle-modal')
 </script>
@@ -13,14 +12,9 @@ const openModal = () => emit('toggle-modal')
   <aside class="sidebar">
     <TheSidebarActions />
     <div class="sidebar__nav-wrapper">
-      <TheSidebarNav title="Сегодня" />
-      <TheSidebarNav title="Вчера" />
+      <TheSidebarNav />
     </div>
-    <TheSidebarUser
-      @toggle-modal="openModal"
-      @update-props="emit('update-props', '')"
-      :user="user"
-    />
+    <TheSidebarUser @toggle-modal="openModal" />
   </aside>
 </template>
 

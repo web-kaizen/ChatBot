@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import SelectBotsItem from '@/components/SelectBots/SelectBotsItem.vue'
 import { useBots } from '@/store/bots'
 
@@ -7,48 +7,48 @@ const allBots = useBots()
 const listBots = ref([])
 const listModels = ref([])
 const listModes = ref([])
-const selectedBot = ref('')
-const selectedModel = ref('')
-const selectedMode = ref('')
+const { bot, model, mode } = allBots.getSelectedBots
+const selectedBot = ref(bot)
+const selectedModel = ref(model)
+const selectedMode = ref(mode)
 
-const renderSelect = (bots) => {
-  const sectorObj = localStorage.getItem('bots') ? JSON.parse(localStorage.getItem('bots')) : {}
+const renderSelect = () => {
+  const bots = allBots.getBots
+  if (!bots) return
+
   listBots.value = bots
-  listModels.value = listBots.value[0].modelList
-  listModes.value = listModels.value[0].modeList
-
-  selectedBot.value = sectorObj.bot || listBots.value[0].name
+  if (selectedBot.value)
+    listModels.value = bots.find((bot) => bot.name === selectedBot.value).modelList
+  if (selectedModel.value)
+    listModes.value = listModels.value.find((model) => model.name === selectedModel.value).modeList
 }
 
 const onChangeSelectBots = (value) => {
   selectedBot.value = value
+  allBots.setSelectedBots('bot', value)
+  listModels.value = listBots.value.find((bot) => bot.name === selectedBot.value).modelList
+  selectedModel.value = ''
+  selectedMode.value = ''
 }
 
 const onChangeSelectModel = (value) => {
   selectedModel.value = value
+  allBots.setSelectedBots('model', value)
   listModes.value = listModels.value.find((model) => model.name === selectedModel.value).modeList
-  selectedMode.value = listModes.value[0].name
-  saveToLocalStorage()
+  selectedMode.value = ''
 }
 
 const onChangeSelectMode = (value) => {
   selectedMode.value = value
-  saveToLocalStorage()
+  allBots.setSelectedBots('mode', value)
 }
 
-const saveToLocalStorage = () => {
-  const sectorObj = {
-    bot: selectedBot.value,
-    model: selectedModel.value,
-    mode: selectedMode.value
-  }
-  localStorage.setItem('bots', JSON.stringify(sectorObj))
-}
+renderSelect()
 
 watch(
   () => allBots,
   () => {
-    renderSelect(allBots.getBots)
+    renderSelect()
   },
   { deep: true }
 )
@@ -56,45 +56,37 @@ watch(
 watch(
   () => selectedBot,
   () => {
-    const sectorObj = localStorage.getItem('bots') ? JSON.parse(localStorage.getItem('bots')) : {}
-
-    if (selectedBot.value === 'ChatGPT') {
-      selectedModel.value = sectorObj.model || listModels.value[0].name
-      listModes.value = listModels.value.find(
-        (model) => model.name === selectedModel.value
-      ).modeList
-      selectedMode.value = sectorObj.mode || listModes.value[0].name
-    } else {
+    if (selectedBot.value !== 'ChatGPT') {
       selectedModel.value = ''
       selectedMode.value = ''
+      allBots.setSelectedBots('model', '')
+      allBots.setSelectedBots('mode', '')
     }
-    saveToLocalStorage()
   },
   { deep: true }
 )
-
-onMounted(() => {
-  if (allBots.getBots.length) renderSelect(allBots.getBots)
-})
 </script>
 
 <template>
   <section class="select-bot">
     <SelectBotsItem
+      text="бота"
       :items="listBots"
-      :isSelected="selectedBot"
+      :selected="bot"
       @change-select="onChangeSelectBots"
     />
     <SelectBotsItem
       v-if="selectedBot === 'ChatGPT'"
+      text="модели"
       :items="listModels"
-      :isSelected="selectedModel"
+      :selected="model"
       @change-select="onChangeSelectModel"
     />
     <SelectBotsItem
-      v-if="selectedBot === 'ChatGPT'"
+      v-if="selectedBot === 'ChatGPT' && selectedModel"
+      text="режим"
       :items="listModes"
-      :isSelected="selectedMode"
+      :selected="mode"
       @change-select="onChangeSelectMode"
     />
   </section>

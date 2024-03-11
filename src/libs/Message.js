@@ -6,7 +6,7 @@ export default class Message {
     activeChat = newChat()
 
     getList(dialogueId, offset = 0, limit = undefined, callback) {
-        if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogue_id');
+        // if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogue_id');
         if (typeof offset !== 'number') ApiError.return('invalid_offset');
         if (limit && typeof limit !== 'number') ApiError.return('invalid_limit');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');
@@ -18,7 +18,7 @@ export default class Message {
     }
 
     send(dialogueId, message, botId, callback) {
-        if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogue_id');
+        // if (typeof dialogueId !== 'number') ApiError.return('invalid_dialogue_id');
         if (typeof message !== 'string') ApiError.return('invalid_text');
         if (typeof botId !== 'number') ApiError.return('invalid_bot_id');
         if (typeof callback !== 'function') ApiError.return('invalid_callback');

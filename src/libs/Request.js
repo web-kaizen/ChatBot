@@ -3,17 +3,17 @@ import ApiError from './ApiError'
 
 export default class Request {
     static getProxyURL() {
-        let token = this.getAccessToken()
+        // let token = this.getAccessToken()
 
-        if (token) {
-            return { path: URL_PROXY }
-        }
+        // if (token) {
+        //     return { path: URL_PROXY }
+        // }
 
         return { path: BASE_PROXY }
     }
 
     static getAccessToken() {
-        return localStorage.getItem('accessToken') ? JSON.parse(localStorage.getItem('accessToken')) : null;
+        return localStorage.getItem('accessToken') ? localStorage.getItem('accessToken') : null;
     }
 
     static saveAccessToken(token) {
@@ -42,8 +42,12 @@ export default class Request {
             body: body
         })
             .then(async (response) => {
-                let json = await response.json();
+                if (response.status === 204) {
+                    typeof successCallbabk === 'function' && successCallbabk(null)
+                    return
+                }
 
+                const json = await response.json();
                 if (json['result']) {
                     if (json['result']['access_token']) {
                         this.saveAccessToken(json['result']['access_token'])

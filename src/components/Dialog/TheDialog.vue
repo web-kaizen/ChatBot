@@ -4,12 +4,14 @@ import { XMarkIcon } from '@heroicons/vue/24/outline'
 import TheDialogChat from './TheDialogChat.vue'
 import TheDialogInput from './TheDialogInput.vue'
 import TheDialogError from './TheDialogError.vue'
-import { newChat } from '../../store/chat'
-import { userChats } from '../../store/userChats'
+import { newChat } from '@/store/chat'
+import { userChats } from '@/store/userChats'
 import Message from '@/libs/Message'
+import { userDialoguesStore } from '@/store/userDialogues'
+
+const userDialogues = userDialoguesStore()
 
 // TODO: эти данные будем получать с бекенда
-const dialogId = 356
 const botId = 1
 
 const messages = new Message()
@@ -31,16 +33,37 @@ const getAllMessages = (id) => {
 }
 
 const onSendMessage = (textMess) => {
-  messages.send(dialogId, textMess, botId, (data) => {
-    if ('result' in data) {
-      userDialogs.addMessagesInCurrentChat(dialogId, data.result)
+  let dialogId = userDialogs.getCurrentChatId
 
-      const currentChat = userDialogs.getUserChats
-      activeChat.changeMessages(currentChat.find((chat) => chat.id === dialogId).messages)
-    } else if ('error' in data) {
-      messages.handleApiError(data.error)
-    }
-  })
+  const sendMessage = (dialogId) => {
+    console.log(dialogId)
+
+    messages.send(dialogId, textMess, botId, (data) => {
+      if ('result' in data) {
+        userDialogs.addMessagesInCurrentChat(dialogId, data.result)
+
+        const currentChat = userDialogs.getUserChats
+        activeChat.changeMessages(currentChat.find((chat) => chat.id === dialogId).messages)
+      } else if ('error' in data) {
+        messages.handleApiError(data.error)
+      }
+    })
+  }
+
+  if (!dialogId) {
+    userDialogues
+      .createNewDialogue(`Диалог ${Math.round(Math.random() * 100)}`, botId)
+      .then((newDialogId) => {
+        dialogId = newDialogId
+        userDialogs.changeCurrentChatId(dialogId)
+        sendMessage(dialogId)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  } else {
+    sendMessage(dialogId)
+  }
 }
 
 const closeChat = () => {
@@ -51,7 +74,7 @@ const closeChat = () => {
 }
 
 onMounted(() => {
-  getAllMessages(dialogId)
+  userDialogues.getDialoguesFromApi()
 })
 </script>
 
